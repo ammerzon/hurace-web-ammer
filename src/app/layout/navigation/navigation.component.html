@@ -1,1 +1,29 @@
-<p>navigation works!</p>
+<aside class="mdc-drawer">
+  <div class="mdc-drawer__header">
+    <h3 class="mdc-drawer__title">Hurace</h3>
+  </div>
+  <div class="mdc-drawer__content">
+    <nav class="mdc-list">
+      <a class="mdc-list-item mdc-list-item--activated" routerLink="/home" routerLinkActive="mdc-list-item--activated">
+        <i aria-hidden="true" class="material-icons mdc-list-item__graphic">dashboard</i>
+        <span class="mdc-list-item__text">Dashboard</span>
+      </a>
+      <a class="mdc-list-item" routerLink="/live-view" routerLinkActive="mdc-list-item--activated">
+        <i aria-hidden="true" class="material-icons mdc-list-item__graphic">live_tv</i>
+        <span class="mdc-list-item__text">Live View</span>
+      </a>
+      <a class="mdc-list-item" routerLink="/skiers" routerLinkActive="mdc-list-item--activated">
+        <i aria-hidden="true" class="material-icons mdc-list-item__graphic">view_list</i>
+        <span class="mdc-list-item__text">Skiers</span>
+      </a>
+      <a class="mdc-list-item" routerLink="/seasons" routerLinkActive="mdc-list-item--activated">
+        <i aria-hidden="true" class="material-icons mdc-list-item__graphic">calendar_today</i>
+        <span class="mdc-list-item__text">Seasons</span>
+      </a>
+      <a class="mdc-list-item" routerLink="/analysis" routerLinkActive="mdc-list-item--activated">
+        <i aria-hidden="true" class="material-icons mdc-list-item__graphic">search</i>
+        <span class="mdc-list-item__text">Analysis</span>
+      </a>
+    </nav>
+  </div>
+</aside>
