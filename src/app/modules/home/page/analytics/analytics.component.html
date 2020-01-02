@@ -1,1 +1,20 @@
-<p>analytics works!</p>
+<mat-grid-list cols="3" gutterSize="20px" rowHeight="200px">
+  <mat-grid-tile>
+    <mat-card class="analytics-card blue-card-background">
+      <mat-card-title [countUp]="amountSkiers" class="analytics-card-title">0</mat-card-title>
+      <mat-card-subtitle class="analytics-card-subtitle">Skiers</mat-card-subtitle>
+    </mat-card>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-card class="analytics-card orange-card-background">
+      <mat-card-title [countUp]="amountSeasons" class="analytics-card-title">0</mat-card-title>
+      <mat-card-subtitle class="analytics-card-subtitle">Seasons</mat-card-subtitle>
+    </mat-card>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-card class="analytics-card green-card-background">
+      <mat-card-title [countUp]="amountRaces" class="analytics-card-title">0</mat-card-title>
+      <mat-card-subtitle class="analytics-card-subtitle">Races</mat-card-subtitle>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
