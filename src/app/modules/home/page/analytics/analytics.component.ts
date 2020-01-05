@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {RaceService, RunService, SkierService} from '@hurace-client/api';
 
 @Component({
   selector: 'app-analytics',
@@ -7,13 +8,19 @@ import {Component, OnInit} from '@angular/core';
 })
 export class AnalyticsComponent implements OnInit {
   amountSkiers: number;
-  amountSeasons: number;
+  amountRuns: number;
   amountRaces: number;
 
-  constructor() {
-    this.amountSkiers = 10_000;
-    this.amountSeasons = 10;
-    this.amountRaces = 100;
+  constructor(private raceService: RaceService, private runService: RunService, private skierService: SkierService) {
+    raceService.raceMetadataGet().subscribe(metadata => {
+      this.amountRaces = metadata.count;
+    });
+    runService.runMetadataGet().subscribe(metadata => {
+      this.amountRuns = metadata.count;
+    });
+    skierService.skierMetadataGet().subscribe(metadata => {
+      this.amountSkiers = metadata.count;
+    });
   }
 
   ngOnInit() {

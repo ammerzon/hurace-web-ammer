@@ -5,10 +5,12 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NavigationComponent} from './layout/navigation/navigation.component';
-import {CoreModule} from './core/core.module';
-import {SharedModule} from './shared/shared.module';
+import {CoreModule} from '@app/core.module';
+import {SharedModule} from '@shared/shared.module';
 import {AuthLayoutComponent} from './layout/auth-layout/auth-layout.component';
 import {ContentLayoutComponent} from './layout/content-layout/content-layout.component';
+import {environment} from '@env';
+import {BASE_PATH} from '@hurace-client/api';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,7 @@ import {ContentLayoutComponent} from './layout/content-layout/content-layout.com
     CoreModule,
     SharedModule
   ],
-  providers: [],
+  providers: [{provide: BASE_PATH, useValue: environment.basePath}],
   bootstrap: [AppComponent]
 })
 export class AppModule {
