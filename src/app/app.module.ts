@@ -26,7 +26,7 @@ import {BASE_PATH} from '@hurace-client/api';
     CoreModule,
     SharedModule
   ],
-  providers: [{provide: BASE_PATH, useValue: environment.basePath}],
+  providers: [{provide: BASE_PATH, useValue: environment.huraceApiUrl}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

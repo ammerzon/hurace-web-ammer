@@ -1,15 +1,18 @@
 import {NgModule} from '@angular/core';
 import {AuthGuard} from '@app/guards/auth.guard';
-import {SharedModule} from '@shared/shared.module';
 import {HttpClientModule} from '@angular/common/http';
+import {OAuthModule} from 'angular-oauth2-oidc';
+import {AuthService} from '@app/services/auth.service';
 
 @NgModule({
   declarations: [],
   imports: [
-    HttpClientModule
+    HttpClientModule,
+    OAuthModule.forRoot()
   ],
   providers: [
-    AuthGuard
+    AuthGuard,
+    AuthService
   ]
 })
 export class CoreModule {

@@ -1,23 +1,25 @@
 import {Injectable} from '@angular/core';
-import {Observable, of, throwError} from 'rxjs';
+import {OAuthService} from 'angular-oauth2-oidc';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  login(username: string, password: string): Observable<boolean> {
-    if (username === 'username' && password === 'password') {
-      return of(true);
-    }
 
-    return throwError('Invalid username or password');
+  constructor(private oauthService: OAuthService) {
   }
 
-  logout(): Observable<boolean> {
-    return of(true);
+  login() {
+    this.oauthService.initLoginFlow();
+  }
+
+  logout() {
+    this.oauthService.logOut();
   }
 
   loggedIn(): boolean {
-    return false;
+    const hasIdToken = this.oauthService.hasValidIdToken();
+    const hasAccessToken = this.oauthService.hasValidAccessToken();
+    return (hasIdToken && hasAccessToken);
   }
 }

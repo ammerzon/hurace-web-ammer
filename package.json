@@ -27,6 +27,7 @@
     "@hurace-client/api": "file:scripts/hurace-client/hurace-client-api-1.0.0.tgz",
     "@material/drawer": "^4.0.0",
     "@material/list": "^4.0.0",
+    "angular-oauth2-oidc": "^8.0.4",
     "countup.js-angular2": "^7.3.0",
     "hammerjs": "^2.0.8",
     "rxjs": "~6.5.0",
