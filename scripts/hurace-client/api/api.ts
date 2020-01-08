@@ -1,7 +1,9 @@
-export * from './race.service';
-import { RaceService } from './race.service';
-export * from './run.service';
-import { RunService } from './run.service';
-export * from './skier.service';
-import { SkierService } from './skier.service';
-export const APIS = [RaceService, RunService, SkierService];
+export * from './races.service';
+import { RacesService } from './races.service';
+export * from './runs.service';
+import { RunsService } from './runs.service';
+export * from './seasons.service';
+import { SeasonsService } from './seasons.service';
+export * from './skiers.service';
+import { SkiersService } from './skiers.service';
+export const APIS = [RacesService, RunsService, SeasonsService, SkiersService];

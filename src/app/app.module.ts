@@ -11,13 +11,15 @@ import {AuthLayoutComponent} from './layout/auth-layout/auth-layout.component';
 import {ContentLayoutComponent} from './layout/content-layout/content-layout.component';
 import {environment} from '@env';
 import {BASE_PATH} from '@hurace-client/api';
+import { AppBarComponent } from './layout/app-bar/app-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
     AuthLayoutComponent,
-    ContentLayoutComponent
+    ContentLayoutComponent,
+    AppBarComponent
   ],
   imports: [
     BrowserModule,

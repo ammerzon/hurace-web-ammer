@@ -17,7 +17,7 @@ import { HttpClient, HttpHeaders, HttpParams,
 import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
-import { Metadata } from '../model/metadata';
+import { Season } from '../model/season';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -27,7 +27,7 @@ import { Configuration }                                     from '../configurat
 @Injectable({
   providedIn: 'root'
 })
-export class SkierService {
+export class SeasonsService {
 
     protected basePath = 'http://localhost';
     public defaultHeaders = new HttpHeaders();
@@ -53,10 +53,10 @@ export class SkierService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public skierMetadataGet(observe?: 'body', reportProgress?: boolean): Observable<Metadata>;
-    public skierMetadataGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Metadata>>;
-    public skierMetadataGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Metadata>>;
-    public skierMetadataGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public seasonsGet(observe?: 'body', reportProgress?: boolean): Observable<Array<number>>;
+    public seasonsGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<number>>>;
+    public seasonsGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<number>>>;
+    public seasonsGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -70,7 +70,42 @@ export class SkierService {
         }
 
 
-        return this.httpClient.get<Metadata>(`${this.configuration.basePath}/Skier/metadata`,
+        return this.httpClient.get<Array<number>>(`${this.configuration.basePath}/Seasons`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param season 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public seasonsSeasonGet(season: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Season>>;
+    public seasonsSeasonGet(season: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Season>>>;
+    public seasonsSeasonGet(season: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Season>>>;
+    public seasonsSeasonGet(season: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (season === null || season === undefined) {
+            throw new Error('Required parameter season was null or undefined when calling seasonsSeasonGet.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Season>>(`${this.configuration.basePath}/Seasons/${encodeURIComponent(String(season))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

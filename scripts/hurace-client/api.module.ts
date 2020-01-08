@@ -3,18 +3,20 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
 
-import { RaceService } from './api/race.service';
-import { RunService } from './api/run.service';
-import { SkierService } from './api/skier.service';
+import { RacesService } from './api/races.service';
+import { RunsService } from './api/runs.service';
+import { SeasonsService } from './api/seasons.service';
+import { SkiersService } from './api/skiers.service';
 
 @NgModule({
   imports:      [],
   declarations: [],
   exports:      [],
   providers: [
-    RaceService,
-    RunService,
-    SkierService ]
+    RacesService,
+    RunsService,
+    SeasonsService,
+    SkiersService ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders {

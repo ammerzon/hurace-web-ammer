@@ -18,6 +18,7 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { Metadata } from '../model/metadata';
+import { Race } from '../model/race';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -27,7 +28,7 @@ import { Configuration }                                     from '../configurat
 @Injectable({
   providedIn: 'root'
 })
-export class RaceService {
+export class RacesService {
 
     protected basePath = 'http://localhost';
     public defaultHeaders = new HttpHeaders();
@@ -50,13 +51,23 @@ export class RaceService {
 
 
     /**
+     * @param season 
+     * @param locationId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public raceMetadataGet(observe?: 'body', reportProgress?: boolean): Observable<Metadata>;
-    public raceMetadataGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Metadata>>;
-    public raceMetadataGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Metadata>>;
-    public raceMetadataGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public racesGet(season?: number, locationId?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Race>>;
+    public racesGet(season?: number, locationId?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Race>>>;
+    public racesGet(season?: number, locationId?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Race>>>;
+    public racesGet(season?: number, locationId?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (season !== undefined && season !== null) {
+            queryParameters = queryParameters.set('season', <any>season);
+        }
+        if (locationId !== undefined && locationId !== null) {
+            queryParameters = queryParameters.set('locationId', <any>locationId);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -70,7 +81,39 @@ export class RaceService {
         }
 
 
-        return this.httpClient.get<Metadata>(`${this.configuration.basePath}/Race/metadata`,
+        return this.httpClient.get<Array<Race>>(`${this.configuration.basePath}/Races`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public racesMetadataGet(observe?: 'body', reportProgress?: boolean): Observable<Metadata>;
+    public racesMetadataGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Metadata>>;
+    public racesMetadataGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Metadata>>;
+    public racesMetadataGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Metadata>(`${this.configuration.basePath}/Races/metadata`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
