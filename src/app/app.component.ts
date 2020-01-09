@@ -3,7 +3,7 @@ import {AuthConfig, JwksValidationHandler, OAuthService} from 'angular-oauth2-oi
 
 export const authConfig: AuthConfig = {
   issuer: 'https://demo.identityserver.io',
-  redirectUri: window.location.origin + '/home',
+  redirectUri: window.location.origin + '/skiers',
   clientId: 'interactive.public',
   responseType: 'code',
   scope: 'openid profile email api offline_access ',

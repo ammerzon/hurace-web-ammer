@@ -1,1 +1,80 @@
-<p>skiers works!</p>
+<app-login-bar></app-login-bar>
+
+<mat-form-field class="search">
+  <input matInput (keyup)="filterSkiers($event.target.value)" placeholder="Search for skiers">
+  <mat-icon matSuffix>search</mat-icon>
+</mat-form-field>
+
+<div class="skier-table mat-elevation-z8">
+  <div class="loading-shade" *ngIf="isLoadingSkiers">
+    <mat-spinner *ngIf="isLoadingSkiers"></mat-spinner>
+  </div>
+
+  <div>
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="profilePicture">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <app-image rounded="true" defaultImage="assets/skier-profile-picture-placeholder.jpg" image="{{row.pictureUrl}}"></app-image>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Firstname</th>
+        <td mat-cell *matCellDef="let row">{{row.firstName}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Lastname</th>
+        <td mat-cell *matCellDef="let row">{{row.lastName}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Gender</th>
+        <td mat-cell *matCellDef="let row">
+          <app-gender-indicator gender="{{row.gender}}"></app-gender-indicator>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="birthday">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Birthday</th>
+        <td mat-cell *matCellDef="let row">{{row.birthdate | date:'mediumDate'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
+        <td mat-cell *matCellDef="let row">
+          {{row.country.code}}
+          <span class="flag-icon flag-icon-{{row.country.code | lowercase}}"></span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button (click)="editSkier(row)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button (click)="deleteSkier(row)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <mat-paginator [pageSizeOptions]="[15, 25, 50]" showFirstLastButtons></mat-paginator>
+</div>
+
+<button mat-fab color="primary" class="fab-bottom-right" (click)="createSkier()">
+  <mat-icon>add</mat-icon>
+</button>

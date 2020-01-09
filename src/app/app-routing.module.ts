@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ContentLayoutComponent} from './layout/content-layout/content-layout.component';
 import {AuthLayoutComponent} from './layout/auth-layout/auth-layout.component';
-import {AuthGuard} from '@app/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -36,7 +35,6 @@ const routes: Routes = [
       },
       {
         path: 'skiers',
-        canActivate: [AuthGuard],
         loadChildren: () =>
           import('@modules/skiers/skiers.module').then(m => m.SkiersModule)
       }

@@ -11,7 +11,10 @@ import {AuthLayoutComponent} from './layout/auth-layout/auth-layout.component';
 import {ContentLayoutComponent} from './layout/content-layout/content-layout.component';
 import {environment} from '@env';
 import {BASE_PATH} from '@hurace-client/api';
-import { AppBarComponent } from './layout/app-bar/app-bar.component';
+import {registerLocaleData} from '@angular/common';
+import localeAt from '@angular/common/locales/de-AT';
+
+registerLocaleData(localeAt, 'de-AT');
 
 @NgModule({
   declarations: [
@@ -19,7 +22,6 @@ import { AppBarComponent } from './layout/app-bar/app-bar.component';
     NavigationComponent,
     AuthLayoutComponent,
     ContentLayoutComponent,
-    AppBarComponent
   ],
   imports: [
     BrowserModule,
