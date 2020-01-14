@@ -1,80 +1,81 @@
 <app-login-bar></app-login-bar>
 
 <mat-form-field class="search">
-  <input matInput (keyup)="filterSkiers($event.target.value)" placeholder="Search for skiers">
+  <input (keyup)="filterSkiers($event.target.value)" matInput placeholder="Search for skiers">
   <mat-icon matSuffix>search</mat-icon>
 </mat-form-field>
 
 <div class="skier-table mat-elevation-z8">
-  <div class="loading-shade" *ngIf="isLoadingSkiers">
+  <div *ngIf="isLoadingSkiers" class="loading-shade">
     <mat-spinner *ngIf="isLoadingSkiers"></mat-spinner>
   </div>
 
   <div>
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table [dataSource]="dataSource" mat-table matSort>
       <ng-container matColumnDef="profilePicture">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let row">
-          <app-image rounded="true" defaultImage="assets/skier-profile-picture-placeholder.jpg" image="{{row.pictureUrl}}"></app-image>
+        <th *matHeaderCellDef mat-header-cell></th>
+        <td *matCellDef="let row" mat-cell>
+          <app-image defaultImage="assets/skier-profile-picture-placeholder.jpg" image="{{row.pictureUrl}}"
+                     rounded="true"></app-image>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="firstName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Firstname</th>
-        <td mat-cell *matCellDef="let row">{{row.firstName}}</td>
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Firstname</th>
+        <td *matCellDef="let row" mat-cell>{{row.firstName}}</td>
       </ng-container>
 
       <ng-container matColumnDef="lastName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Lastname</th>
-        <td mat-cell *matCellDef="let row">{{row.lastName}}</td>
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Lastname</th>
+        <td *matCellDef="let row" mat-cell>{{row.lastName}}</td>
       </ng-container>
 
       <ng-container matColumnDef="gender">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Gender</th>
-        <td mat-cell *matCellDef="let row">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Gender</th>
+        <td *matCellDef="let row" mat-cell>
           <app-gender-indicator gender="{{row.gender}}"></app-gender-indicator>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="birthday">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Birthday</th>
-        <td mat-cell *matCellDef="let row">{{row.birthdate | date:'mediumDate'}}</td>
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Birthday</th>
+        <td *matCellDef="let row" mat-cell>{{row.birthdate | date:'mediumDate'}}</td>
       </ng-container>
 
       <ng-container matColumnDef="country">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Country</th>
-        <td mat-cell *matCellDef="let row">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Country</th>
+        <td *matCellDef="let row" mat-cell>
           {{row.country.code}}
           <span class="flag-icon flag-icon-{{row.country.code | lowercase}}"></span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="edit">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-        <td mat-cell *matCellDef="let row">
-          <button mat-icon-button (click)="editSkier(row)">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header></th>
+        <td *matCellDef="let row" mat-cell>
+          <button (click)="editSkier(row)" mat-icon-button>
             <mat-icon>edit</mat-icon>
           </button>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="delete">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-        <td mat-cell *matCellDef="let row">
-          <button mat-icon-button (click)="deleteSkier(row)">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header></th>
+        <td *matCellDef="let row" mat-cell>
+          <button (click)="deleteSkier(row)" mat-icon-button>
             <mat-icon>delete</mat-icon>
           </button>
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
     </table>
   </div>
 
   <mat-paginator [pageSizeOptions]="[15, 25, 50]" showFirstLastButtons></mat-paginator>
 </div>
 
-<button mat-fab color="primary" class="fab-bottom-right" (click)="createSkier()">
+<button (click)="createSkier()" *ngIf="authService.loggedIn()" class="fab-bottom-right" color="primary" mat-fab>
   <mat-icon>add</mat-icon>
 </button>

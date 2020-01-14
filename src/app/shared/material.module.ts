@@ -1,7 +1,8 @@
 import {NgModule} from '@angular/core';
 import {
+  MatAutocompleteModule,
   MatButtonModule,
-  MatCardModule,
+  MatCardModule, MatDatepickerModule,
   MatDialogModule,
   MatFormFieldModule,
   MatGridListModule,
@@ -9,11 +10,12 @@ import {
   MatInputModule,
   MatListModule,
   MatPaginatorModule,
-  MatProgressSpinnerModule,
+  MatProgressSpinnerModule, MatRadioModule, MatSnackBarModule,
   MatSortModule,
   MatTableModule,
   MatToolbarModule
 } from '@angular/material';
+import {MatMomentDateModule} from '@angular/material-moment-adapter';
 
 @NgModule({
   declarations: [],
@@ -30,7 +32,12 @@ import {
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
+    MatAutocompleteModule,
+    MatRadioModule
   ],
   exports: [
     MatGridListModule,
@@ -45,7 +52,12 @@ import {
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
+    MatAutocompleteModule,
+    MatRadioModule
   ]
 })
 export class MaterialModule {

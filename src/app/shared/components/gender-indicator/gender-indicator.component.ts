@@ -14,4 +14,7 @@ export class GenderIndicatorComponent implements OnInit {
   ngOnInit() {
   }
 
+  checkGender(): boolean {
+    return this.gender === Gender.Male;
+  }
 }

@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
-import {AuthConfig, JwksValidationHandler, OAuthService} from 'angular-oauth2-oidc';
+import {AuthConfig, JwksValidationHandler, OAuthService, OAuthSuccessEvent} from 'angular-oauth2-oidc';
+import {AuthService} from '@app/services/auth.service';
+import {Router} from '@angular/router';
 
 export const authConfig: AuthConfig = {
   issuer: 'https://demo.identityserver.io',

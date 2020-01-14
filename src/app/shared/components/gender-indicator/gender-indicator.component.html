@@ -1,2 +1,2 @@
-<div *ngIf="gender == 0; else elseBlock" class="gender gender-male">M</div>
+<div *ngIf="checkGender(); else elseBlock" class="gender gender-male">M</div>
 <ng-template #elseBlock><span class="gender gender-female">W</span></ng-template>

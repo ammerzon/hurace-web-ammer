@@ -1,0 +1,31 @@
+<mat-grid-list cols="2">
+  <mat-grid-tile>
+    <mat-list>
+      <h1 class="mat-display-1">Create skier</h1>
+      <app-skier-detail #skierDetail></app-skier-detail>
+      <button mat-raised-button (click)="createSkier()" [disabled]="!skierDetail.skierForm.valid" color="primary">Create</button>
+    </mat-list>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-card class="skier-card">
+      <mat-grid-list cols="2">
+        <mat-grid-tile>
+          <app-image defaultImage="assets/skier-profile-picture-placeholder.jpg" image="{{skierDetail.skierForm.get('pictureUrl').value}}"
+                     rounded="true" width="150px"></app-image>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-card-header class="skier-card-info">
+            <mat-card-title>{{skierDetail.skierForm.get('firstName').value}} {{skierDetail.skierForm.get('lastName').value}}</mat-card-title>
+            <mat-card-subtitle>
+              {{skierDetail.skierForm.get('country').value}}
+              <span class="flag-icon flag-icon-{{skierDetail.skierForm.get('country').value | lowercase}}"></span>
+            </mat-card-subtitle>
+            <mat-card-subtitle>
+              {{skierDetail.skierForm.get('birthday').value | date:'mediumDate'}}
+            </mat-card-subtitle>
+          </mat-card-header>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

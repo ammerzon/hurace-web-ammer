@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ContentLayoutComponent} from './layout/content-layout/content-layout.component';
-import {AuthLayoutComponent} from './layout/auth-layout/auth-layout.component';
 
 const routes: Routes = [
   {
@@ -39,13 +38,7 @@ const routes: Routes = [
           import('@modules/skiers/skiers.module').then(m => m.SkiersModule)
       }
     ]
-  },
-  {
-    path: 'auth',
-    component: AuthLayoutComponent,
-    loadChildren: () =>
-      import('@modules/auth/auth.module').then(m => m.AuthModule)
-  },
+  }
 ];
 
 @NgModule({

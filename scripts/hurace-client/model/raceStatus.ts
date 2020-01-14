@@ -11,11 +11,11 @@
  */
 
 
-export type RaceStatus = 0 | 1 | 2;
+export type RaceStatus = 'ready' | 'inProgress' | 'finished';
 
 export const RaceStatus = {
-    NUMBER_0: 0 as RaceStatus,
-    NUMBER_1: 1 as RaceStatus,
-    NUMBER_2: 2 as RaceStatus
+    Ready: 'ready' as RaceStatus,
+    InProgress: 'inProgress' as RaceStatus,
+    Finished: 'finished' as RaceStatus
 };
 

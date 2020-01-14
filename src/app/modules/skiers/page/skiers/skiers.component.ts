@@ -1,6 +1,6 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Skier} from '@hurace-client/api/model/skier';
-import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/material';
 import {SkiersService} from '@hurace-client/api';
 import {AuthService} from '@app/services/auth.service';
 import {DeleteDialogComponent} from '@modules/skiers/page/delete-dialog/delete-dialog.component';
@@ -20,7 +20,8 @@ export class SkiersComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private router: Router, private skierService: SkiersService, private authService: AuthService, private dialog: MatDialog) {
+  constructor(private router: Router, private skierService: SkiersService, private authService: AuthService,
+              private dialog: MatDialog, private snackBar: MatSnackBar) {
     if (this.authService.loggedIn()) {
       this.displayedColumns.push('edit', 'delete');
     }
@@ -28,9 +29,12 @@ export class SkiersComponent implements OnInit {
     this.dataSource = new MatTableDataSource<Skier>();
     this.dataSource.sortingDataAccessor = (skier, property): string | number => {
       switch (property) {
-        case 'birthday': return new Date(skier.birthdate).getTime();
-        case 'country': return skier.country.code;
-        default: return skier[property];
+        case 'birthday':
+          return new Date(skier.birthdate).getTime();
+        case 'country':
+          return skier.country.code;
+        default:
+          return skier[property];
       }
     };
   }
@@ -58,15 +62,22 @@ export class SkiersComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(shouldDelete => {
       if (shouldDelete) {
-        this.skierService.skiersIdDelete(skier.id).subscribe(value => {
+        this.skierService.skiersIdDelete(skier.id).subscribe(() => {
           this.reloadDataSource();
-        });
+          this.snackBar.open(`Skier ${skier.firstName} ${skier.lastName} has been deleted successfully!`);
+        }, (error => {
+          this.snackBar.open(`Skier ${skier.firstName} ${skier.lastName} could not be deleted!`);
+        }));
       }
     });
   }
 
   editSkier(skier: Skier) {
     this.router.navigateByUrl('/skiers/' + skier.id);
+  }
+
+  createSkier() {
+    this.router.navigateByUrl('/skiers/create');
   }
 
   private reloadDataSource() {
@@ -76,9 +87,5 @@ export class SkiersComponent implements OnInit {
       this.dataSource.data = skiers;
       this.isLoadingSkiers = false;
     });
-  }
-
-  createSkier() {
-    this.router.navigateByUrl('/skiers/' + skier.id);
   }
 }

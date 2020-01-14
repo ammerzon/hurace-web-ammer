@@ -3,6 +3,7 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
 
+import { CountriesService } from './api/countries.service';
 import { RacesService } from './api/races.service';
 import { RunsService } from './api/runs.service';
 import { SeasonsService } from './api/seasons.service';
@@ -13,6 +14,7 @@ import { SkiersService } from './api/skiers.service';
   declarations: [],
   exports:      [],
   providers: [
+    CountriesService,
     RacesService,
     RunsService,
     SeasonsService,

@@ -11,10 +11,10 @@
  */
 
 
-export type Gender = 0 | 1;
+export type Gender = 'male' | 'female';
 
 export const Gender = {
-    NUMBER_0: 0 as Gender,
-    NUMBER_1: 1 as Gender
+    Male: 'male' as Gender,
+    Female: 'female' as Gender
 };
 

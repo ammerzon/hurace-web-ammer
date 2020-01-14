@@ -11,14 +11,14 @@
  */
 
 
-export type RunStatus = 0 | 1 | 2 | 3 | 4 | 5;
+export type RunStatus = 'ready' | 'completed' | 'inProgress' | 'unfinished' | 'notStarted' | 'disqualified';
 
 export const RunStatus = {
-    NUMBER_0: 0 as RunStatus,
-    NUMBER_1: 1 as RunStatus,
-    NUMBER_2: 2 as RunStatus,
-    NUMBER_3: 3 as RunStatus,
-    NUMBER_4: 4 as RunStatus,
-    NUMBER_5: 5 as RunStatus
+    Ready: 'ready' as RunStatus,
+    Completed: 'completed' as RunStatus,
+    InProgress: 'inProgress' as RunStatus,
+    Unfinished: 'unfinished' as RunStatus,
+    NotStarted: 'notStarted' as RunStatus,
+    Disqualified: 'disqualified' as RunStatus
 };
 

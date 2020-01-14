@@ -1,0 +1,12 @@
+<mat-grid-list cols="2">
+  <mat-grid-tile>
+    <mat-list>
+      <h1 class="mat-display-1">Update skier</h1>
+      <app-skier-detail #skierDetail></app-skier-detail>
+      <button mat-raised-button (click)="updateSkier()" [disabled]="!skierDetail.skierForm.valid || !skierDetail.skierForm.dirty" color="primary">Save</button>
+    </mat-list>
+  </mat-grid-tile>
+  <mat-grid-tile>
+
+  </mat-grid-tile>
+</mat-grid-list>

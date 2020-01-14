@@ -1,1 +1,72 @@
-<p>skier-detail works!</p>
+<form [formGroup]="skierForm">
+  <mat-form-field class="full-width">
+    <input #message formControlName="firstName" matInput maxlength="10" placeholder="First name" required>
+    <mat-error
+      *ngIf="(skierForm.get('firstName').hasError('minlength')  || skierForm.get('firstName').hasError('maxlength'))
+      && !skierForm.get('firstName').hasError('required')">
+      Please enter a valid first name
+    </mat-error>
+    <mat-error *ngIf="skierForm.get('firstName').hasError('required')">
+      The first name is <strong>required</strong>
+    </mat-error>
+    <mat-hint align="end">{{message.value.length}} / 10</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input #message formControlName="lastName" matInput maxlength="10" placeholder="Last name" required>
+    <mat-error
+      *ngIf="(skierForm.get('lastName').hasError('minlength') || skierForm.get('lastName').hasError('maxlength'))
+      && !skierForm.get('lastName').hasError('required')">
+      Please enter a valid last name
+    </mat-error>
+    <mat-error *ngIf="skierForm.get('lastName').hasError('required')">
+      The last name is <strong>required</strong>
+    </mat-error>
+    <mat-hint align="end">{{message.value.length}} / 10</mat-hint>
+  </mat-form-field>
+
+  <div>
+    <label>Gender: </label>
+    <mat-radio-group formControlName="gender" required>
+      <mat-radio-button value="male">Male</mat-radio-button>
+      <mat-radio-button value="female">Female</mat-radio-button>
+    </mat-radio-group>
+    <mat-error *ngIf="skierForm.get('gender').hasError('required')">
+      The gender is <strong>required</strong>
+    </mat-error>
+  </div>
+
+  <mat-form-field class="full-width">
+    <input [max]="maxBirthday" formControlName="birthday" [matDatepicker]="birthdayDatepicker" matInput placeholder="Birthday" required>
+    <mat-datepicker-toggle [for]="birthdayDatepicker" matSuffix></mat-datepicker-toggle>
+    <mat-datepicker #birthdayDatepicker></mat-datepicker>
+    <mat-error *ngIf="skierForm.get('birthday').hasError('required')">
+      The birthday is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input formControlName="country" [matAutocomplete]="auto" matInput placeholder="Country" type="text" required>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let country of filteredCountries | async" [value]="country.code">
+        {{country.code}}
+        <span class="flag-icon flag-icon-{{country.code | lowercase}}"></span>
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error
+      *ngIf="skierForm.get('country').hasError('validcountry') && !skierForm.get('country').hasError('required')">
+      Please enter a valid country
+    </mat-error>
+    <mat-error *ngIf="skierForm.get('country').hasError('required')">
+      The country is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input formControlName="pictureUrl" matInput placeholder="Picture url">
+    <mat-error *ngIf="skierForm.get('pictureUrl').hasError('validurl')">
+      Please enter a valid picture url
+    </mat-error>
+    <mat-hint align="end">Optional</mat-hint>
+  </mat-form-field>
+</form>

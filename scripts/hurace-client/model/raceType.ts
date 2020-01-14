@@ -11,10 +11,10 @@
  */
 
 
-export type RaceType = 0 | 1;
+export type RaceType = 'slalom' | 'superSlalom';
 
 export const RaceType = {
-    NUMBER_0: 0 as RaceType,
-    NUMBER_1: 1 as RaceType
+    Slalom: 'slalom' as RaceType,
+    SuperSlalom: 'superSlalom' as RaceType
 };
 

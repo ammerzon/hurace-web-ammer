@@ -1,3 +1,5 @@
+export * from './countries.service';
+import { CountriesService } from './countries.service';
 export * from './races.service';
 import { RacesService } from './races.service';
 export * from './runs.service';
@@ -6,4 +8,4 @@ export * from './seasons.service';
 import { SeasonsService } from './seasons.service';
 export * from './skiers.service';
 import { SkiersService } from './skiers.service';
-export const APIS = [RacesService, RunsService, SeasonsService, SkiersService];
+export const APIS = [CountriesService, RacesService, RunsService, SeasonsService, SkiersService];

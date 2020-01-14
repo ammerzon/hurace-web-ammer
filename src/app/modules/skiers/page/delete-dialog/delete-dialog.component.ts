@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {Skier} from '@hurace-client/api/model/skier';
 
 @Component({
   selector: 'app-delete-dialog',
