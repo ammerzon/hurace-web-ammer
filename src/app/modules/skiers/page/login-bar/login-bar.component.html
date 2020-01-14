@@ -1,12 +1,12 @@
 <mat-toolbar class="login-bar" color="primary">
   <mat-toolbar-row>
     <span class="spacer"></span>
-    <button mat-button *ngIf="!this.loggedIn" (click)="login()">
+    <button (click)="login()" *ngIf="!this.loggedIn" mat-button>
       <mat-icon>logout</mat-icon>
       Login
     </button>
 
-    <button mat-button *ngIf="this.loggedIn" (click)="logout()">
+    <button (click)="logout()" *ngIf="this.loggedIn" mat-button>
       <mat-icon>logout</mat-icon>
       Logout
     </button>

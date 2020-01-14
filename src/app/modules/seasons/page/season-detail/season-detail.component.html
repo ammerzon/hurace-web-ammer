@@ -1,1 +1,46 @@
-<p>season-detail works!</p>
+<div>
+  <app-image defaultImage="assets/race-picture-placeholder.jpg" image="{{firstRace.pictureUrl}}"
+             rounded="true" width="90px"></app-image>
+  <h1 class="mat-display-1 race-header">
+  {{firstRace.location.name}}, {{firstRace.location.country.code}} <span class="flag-icon flag-icon-{{firstRace.location.country.code | lowercase}}"></span>
+</h1>
+</div>
+
+<div class="mat-elevation-z8">
+  <div *ngIf="isLoadingRaces" class="loading-shade">
+    <mat-spinner *ngIf="isLoadingRaces"></mat-spinner>
+  </div>
+
+  <div>
+    <table [dataSource]="dataSource" mat-table matSort>
+      <ng-container matColumnDef="date">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Date</th>
+        <td *matCellDef="let row" mat-cell>{{row.date | date:'mediumDate'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="raceType">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Event</th>
+        <td *matCellDef="let row" mat-cell>{{row.raceType | raceType}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="gender">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Gender</th>
+        <td *matCellDef="let row" mat-cell>
+          <app-gender-indicator gender="{{row.gender}}"></app-gender-indicator>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Status</th>
+        <td *matCellDef="let row" mat-cell>
+          <app-race-status-indicator status="{{row.status}}"></app-race-status-indicator>
+        </td>
+      </ng-container>
+
+      <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+    </table>
+  </div>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+</div>

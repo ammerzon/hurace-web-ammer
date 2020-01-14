@@ -1,0 +1,33 @@
+.season-selection {
+  width: 100px;
+}
+
+td, th {
+  width: 16.66%;
+}
+
+table {
+  width: 100%;
+}
+
+mat-nav-list.list-horizontal {
+  padding: 0;
+  .mat-list-item {
+    display: inline-block;
+    height: auto;
+    width: auto;
+  }
+}
+
+.season-element-row td {
+  border-bottom-width: 0;
+}
+
+tr.season-element-row:not(.example-expanded-row):hover {
+  cursor: pointer;
+  background: #eee5fd;
+}
+
+tr.season-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}

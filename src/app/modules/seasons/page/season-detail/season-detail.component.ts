@@ -1,4 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {RacesService} from '@hurace-client/api/api/races.service';
+import {Location} from '@hurace-client/api/model/location';
+import {ActivatedRoute, Router} from '@angular/router';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {SkiEvent} from '@hurace-client/api/model/skiEvent';
+import {Race} from '@hurace-client/api/model/race';
 
 @Component({
   selector: 'app-season-detail',
@@ -6,11 +12,38 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./season-detail.component.scss']
 })
 export class SeasonDetailComponent implements OnInit {
+  private firstRace: Race;
+  isLoadingRaces: boolean;
+  dataSource: MatTableDataSource<Race>;
+  displayedColumns: string[] = ['date', 'raceType', 'gender', 'status'];
 
-  constructor() {
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
+  constructor(private router: Router, private route: ActivatedRoute, private racesService: RacesService) {
+    this.dataSource = new MatTableDataSource<Race>();
+    this.dataSource.sortingDataAccessor = (race, property): string | number => {
+      switch (property) {
+        case 'date':
+          return new Date(race.date).getTime();
+        default:
+          return race[property];
+      }
+    };
   }
 
   ngOnInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.isLoadingRaces = true;
+
+    this.route.params.subscribe(params => {
+      this.racesService.racesGet(params.seasonsId, params.locationId).subscribe(races => {
+        this.firstRace = races[0];
+        this.dataSource.data = races;
+        this.isLoadingRaces = false;
+      });
+    });
   }
 
 }

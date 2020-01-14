@@ -1,0 +1,6 @@
+<div [ngSwitch]="status">
+  <div *ngSwitchCase="'ready'" class="race-status race-status-ready">Ready</div>
+  <div *ngSwitchCase="'inProgress'" class="race-status race-status-progress">In Progress</div>
+  <div *ngSwitchCase="'finished'" class="race-status race-status-finished">Finished</div>
+  <div *ngSwitchDefault></div>
+</div>

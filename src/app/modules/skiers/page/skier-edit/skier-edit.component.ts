@@ -16,7 +16,8 @@ export class SkierEditComponent implements OnInit {
   @ViewChild('skierDetail', {static: true}) skierDetail;
   private loadedSkier: Skier;
 
-  constructor(private router: Router, private route: ActivatedRoute, private skierService: SkiersService, private runService: RunsService, private snackBar: MatSnackBar) {
+  constructor(private router: Router, private route: ActivatedRoute, private skierService: SkiersService,
+              private runService: RunsService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {

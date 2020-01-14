@@ -10,7 +10,7 @@ import {
   MatInputModule,
   MatListModule,
   MatPaginatorModule,
-  MatProgressSpinnerModule, MatRadioModule, MatSnackBarModule,
+  MatProgressSpinnerModule, MatRadioModule, MatSelectModule, MatSnackBarModule,
   MatSortModule,
   MatTableModule,
   MatToolbarModule
@@ -37,7 +37,8 @@ import {MatMomentDateModule} from '@angular/material-moment-adapter';
     MatDatepickerModule,
     MatMomentDateModule,
     MatAutocompleteModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSelectModule
   ],
   exports: [
     MatGridListModule,
@@ -57,7 +58,8 @@ import {MatMomentDateModule} from '@angular/material-moment-adapter';
     MatDatepickerModule,
     MatMomentDateModule,
     MatAutocompleteModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSelectModule
   ]
 })
 export class MaterialModule {

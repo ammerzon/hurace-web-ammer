@@ -1,1 +1,65 @@
-<p>seasons works!</p>
+<h1 class="mat-display-1">Season
+<mat-form-field appearance="none" class="season-selection">
+  <mat-select [(ngModel)]="selectedSeason" (selectionChange)="updateSeasons($event)">
+    <mat-option *ngFor="let season of seasons" [value]="season">{{season}}</mat-option>
+  </mat-select>
+</mat-form-field>
+</h1>
+
+<div class="mat-elevation-z8">
+  <div *ngIf="isLoadingSeasons" class="loading-shade">
+    <mat-spinner *ngIf="isLoadingSeasons"></mat-spinner>
+  </div>
+
+  <div>
+    <table [dataSource]="dataSource" mat-table matSort>
+      <ng-container matColumnDef="startDate">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Start date</th>
+        <td *matCellDef="let row" mat-cell>{{row.startDate | date:'mediumDate'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="endDate">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>End date</th>
+        <td *matCellDef="let row" mat-cell>{{row.endDate | date:'mediumDate'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="place">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Place</th>
+        <td *matCellDef="let row" mat-cell>{{row.location.name}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="country">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Country</th>
+        <td *matCellDef="let row" mat-cell>
+          {{row.location.country.code}}
+          <span class="flag-icon flag-icon-{{row.location.country.code | lowercase}}"></span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="raceTypes">
+        <th *matHeaderCellDef mat-header-cell>Race types</th>
+        <td *matCellDef="let row" mat-cell>
+          <mat-nav-list class="list-horizontal">
+            <mat-list-item mat-list-item *ngFor="let raceType of row.raceTypes">{{ raceType | raceType }}</mat-list-item>
+          </mat-nav-list>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="genders">
+        <th *matHeaderCellDef mat-header-cell>Genders</th>
+        <td *matCellDef="let row" mat-cell>
+          <mat-nav-list class="list-horizontal">
+            <mat-list-item mat-list-item *ngFor="let gender of row.genders">
+              <app-gender-indicator gender="{{gender}}"></app-gender-indicator>
+            </mat-list-item>
+          </mat-nav-list>
+        </td>
+      </ng-container>
+
+      <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: displayedColumns;" mat-row (click)="showSkiEventDetails(row)" class="season-element-row"></tr>
+    </table>
+  </div>
+
+  <mat-paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>
+</div>

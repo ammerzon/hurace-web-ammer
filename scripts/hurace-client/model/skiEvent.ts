@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import { RaceType } from './raceType';
+import { Gender } from './gender';
 import { Location } from './location';
 
 
@@ -18,5 +19,6 @@ export interface SkiEvent {
     startDate?: Date;
     endDate?: Date;
     raceTypes?: Array<RaceType> | null;
+    genders?: Array<Gender> | null;
 }
 

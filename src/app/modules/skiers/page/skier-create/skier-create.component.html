@@ -3,14 +3,17 @@
     <mat-list>
       <h1 class="mat-display-1">Create skier</h1>
       <app-skier-detail #skierDetail></app-skier-detail>
-      <button mat-raised-button (click)="createSkier()" [disabled]="!skierDetail.skierForm.valid" color="primary">Create</button>
+      <button (click)="createSkier()" [disabled]="!skierDetail.skierForm.valid" color="primary" mat-raised-button>
+        Create
+      </button>
     </mat-list>
   </mat-grid-tile>
   <mat-grid-tile>
     <mat-card class="skier-card">
       <mat-grid-list cols="2">
         <mat-grid-tile>
-          <app-image defaultImage="assets/skier-profile-picture-placeholder.jpg" image="{{skierDetail.skierForm.get('pictureUrl').value}}"
+          <app-image defaultImage="assets/skier-profile-picture-placeholder.jpg"
+                     image="{{skierDetail.skierForm.get('pictureUrl').value}}"
                      rounded="true" width="150px"></app-image>
         </mat-grid-tile>
         <mat-grid-tile>

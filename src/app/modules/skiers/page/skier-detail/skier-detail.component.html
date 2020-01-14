@@ -37,7 +37,8 @@
   </div>
 
   <mat-form-field class="full-width">
-    <input [max]="maxBirthday" formControlName="birthday" [matDatepicker]="birthdayDatepicker" matInput placeholder="Birthday" required>
+    <input [matDatepicker]="birthdayDatepicker" [max]="maxBirthday" formControlName="birthday" matInput
+           placeholder="Birthday" required>
     <mat-datepicker-toggle [for]="birthdayDatepicker" matSuffix></mat-datepicker-toggle>
     <mat-datepicker #birthdayDatepicker></mat-datepicker>
     <mat-error *ngIf="skierForm.get('birthday').hasError('required')">
@@ -46,7 +47,7 @@
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <input formControlName="country" [matAutocomplete]="auto" matInput placeholder="Country" type="text" required>
+    <input [matAutocomplete]="auto" formControlName="country" matInput placeholder="Country" required type="text">
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let country of filteredCountries | async" [value]="country.code">
         {{country.code}}

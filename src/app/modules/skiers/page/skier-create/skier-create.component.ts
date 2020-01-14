@@ -1,9 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {SkiersService} from '@hurace-client/api/api/skiers.service';
 import {Skier} from '@hurace-client/api/model/skier';
-import {Gender} from '@hurace-client/api/model/gender';
 import {Router} from '@angular/router';
-import {MatDialog, MatSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-skier-create',

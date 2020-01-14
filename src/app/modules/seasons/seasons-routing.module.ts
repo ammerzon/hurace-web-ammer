@@ -9,7 +9,7 @@ const routes: Routes = [
     component: SeasonsComponent
   },
   {
-    path: 'seasons/:id',
+    path: ':seasonsId/:locationId',
     component: SeasonDetailComponent,
   }
 ];
