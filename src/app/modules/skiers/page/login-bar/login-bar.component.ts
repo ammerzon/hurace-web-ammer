@@ -8,10 +8,12 @@ import {AuthService} from '@app/services/auth.service';
 })
 export class LoginBarComponent implements OnInit {
 
-  private loggedIn;
+  private isAuthenticated: boolean;
 
   constructor(private authService: AuthService) {
-    this.loggedIn = authService.loggedIn();
+    authService.isAuthenticated$.subscribe(value => {
+      this.isAuthenticated = value;
+    });
   }
 
   ngOnInit() {

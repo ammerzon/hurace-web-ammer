@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {AuthConfig, JwksValidationHandler, OAuthService, OAuthSuccessEvent} from 'angular-oauth2-oidc';
 import {AuthService} from '@app/services/auth.service';
-import {Router} from '@angular/router';
 
 export const authConfig: AuthConfig = {
   issuer: 'https://demo.identityserver.io',
@@ -19,13 +18,18 @@ export const authConfig: AuthConfig = {
 export class AppComponent {
   title = 'Hurace';
 
-  constructor(private oauthService: OAuthService) {
+  constructor(private oauthService: OAuthService, private authService: AuthService) {
     this.configure();
   }
 
   private configure() {
     this.oauthService.configure(authConfig);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+    this.oauthService.events.subscribe(event => {
+      if (event instanceof OAuthSuccessEvent) {
+        this.authService.refresh();
+      }
+    });
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
     this.oauthService.setupAutomaticSilentRefresh();
   }

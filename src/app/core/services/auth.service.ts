@@ -1,10 +1,13 @@
 import {Injectable} from '@angular/core';
 import {OAuthService} from 'angular-oauth2-oidc';
+import {BehaviorSubject, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  isAuthenticated$ = new BehaviorSubject<boolean>(false);
 
   constructor(private oauthService: OAuthService) {
   }
@@ -17,9 +20,9 @@ export class AuthService {
     this.oauthService.logOut();
   }
 
-  loggedIn(): boolean {
+  refresh() {
     const hasIdToken = this.oauthService.hasValidIdToken();
     const hasAccessToken = this.oauthService.hasValidAccessToken();
-    return (hasIdToken && hasAccessToken);
+    this.isAuthenticated$.next(hasIdToken && hasAccessToken);
   }
 }

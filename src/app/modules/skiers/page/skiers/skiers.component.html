@@ -76,6 +76,6 @@
   <mat-paginator [pageSizeOptions]="[15, 25, 50]" showFirstLastButtons></mat-paginator>
 </div>
 
-<button (click)="createSkier()" *ngIf="authService.loggedIn()" class="fab-bottom-right" color="primary" mat-fab>
+<button (click)="createSkier()" *ngIf="isAuthenticated" class="fab-bottom-right" color="primary" mat-fab>
   <mat-icon>add</mat-icon>
 </button>

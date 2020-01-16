@@ -16,13 +16,21 @@ export class SkiersComponent implements OnInit {
   dataSource: MatTableDataSource<Skier>;
   amountSkiers: number;
   displayedColumns: string[] = ['profilePicture', 'firstName', 'lastName', 'gender', 'birthday', 'country'];
+  isAuthenticated: boolean;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private router: Router, private skierService: SkiersService, private authService: AuthService,
               private dialog: MatDialog, private snackBar: MatSnackBar) {
-    if (this.authService.loggedIn()) {
+    this.authService.isAuthenticated$.subscribe(value => {
+      this.isAuthenticated = value;
+      if (value === true && !['edit', 'delete'].some(v => this.displayedColumns.includes(v))) {
+        this.displayedColumns.push('edit', 'delete');
+      }
+    });
+
+    if (this.authService.isAuthenticated$.getValue()) {
       this.displayedColumns.push('edit', 'delete');
     }
 
