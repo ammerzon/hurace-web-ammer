@@ -37,30 +37,6 @@ export class SkierDetailComponent implements OnInit {
     ])
   });
 
-  /*public firstNameFormControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(3),
-    Validators.maxLength(10)
-  ]);
-  public lastNameFormControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(3),
-    Validators.maxLength(10)
-  ]);
-  public birthdayFormControl = new FormControl('', [
-    Validators.required,
-  ]);
-  public pictureUrlFormControl = new FormControl('', [
-    this.skierValidatorService.validUrlValidator()
-  ]);
-  public countryFormControl = new FormControl('', [
-    Validators.required,
-    this.skierValidatorService.validCountryValidator()
-  ]);
-  public genderFormControl = new FormControl('', [
-    Validators.required,
-  ]);*/
-
   public countries: Country[];
   filteredCountries: Observable<Country[]>;
   maxBirthday: Date;
@@ -70,7 +46,7 @@ export class SkierDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.countriesService.countriesGet().subscribe(countries => {
+    this.countriesService.getAllCountries().subscribe(countries => {
       this.countries = countries;
       this.filteredCountries = this.skierForm.get('country').valueChanges
         .pipe(

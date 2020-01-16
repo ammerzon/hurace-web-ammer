@@ -19,6 +19,7 @@ export interface Run {
     race?: Race | null;
     runNumber?: number;
     startPosition?: number;
+    endPosition?: number;
     status?: RunStatus;
     totalTime?: number;
     id?: number;

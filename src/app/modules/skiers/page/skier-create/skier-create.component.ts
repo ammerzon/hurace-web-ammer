@@ -28,7 +28,7 @@ export class SkierCreateComponent implements OnInit {
       gender: this.skierDetail.skierForm.get('gender').value,
       country: this.skierDetail.countries.filter(country => country.code === this.skierDetail.skierForm.get('country').value)[0]
     };
-    this.skierService.skiersPost(skier).subscribe(value => {
+    this.skierService.createSkier(skier).subscribe(value => {
       this.router.navigateByUrl('/skiers');
     }, error => {
       this.snackBar.open(`Skier ${skier.firstName} ${skier.lastName} could not be created!`);

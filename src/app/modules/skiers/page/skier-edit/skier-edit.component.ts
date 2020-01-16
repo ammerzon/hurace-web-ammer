@@ -22,7 +22,7 @@ export class SkierEditComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.skierService.getById(params.id).subscribe(skier => {
+      this.skierService.getSkierById(params.id).subscribe(skier => {
         this.loadedSkier = skier;
         this.skierDetail.skierForm.get('firstName').setValue(skier.firstName);
         this.skierDetail.skierForm.get('lastName').setValue(skier.lastName);
@@ -45,7 +45,7 @@ export class SkierEditComponent implements OnInit {
       gender: this.skierDetail.skierForm.get('gender').value === 'male' ? Gender.Male : Gender.Female,
       country: this.skierDetail.countries.filter(country => country.code === this.skierDetail.skierForm.get('country').value)[0]
     };
-    this.skierService.skiersIdPut(this.loadedSkier.id, skier).subscribe(value => {
+    this.skierService.updateSkier(this.loadedSkier.id, skier).subscribe(value => {
       this.router.navigateByUrl('/skiers');
     }, error => {
       this.snackBar.open(`Skier ${skier.firstName} ${skier.lastName} could not be updated!`);

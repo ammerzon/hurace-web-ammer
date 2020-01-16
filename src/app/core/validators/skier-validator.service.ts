@@ -10,7 +10,7 @@ export class SkierValidatorService {
   private countries: Country[];
 
   constructor(private countriesService: CountriesService) {
-    this.countriesService.countriesGet().subscribe(countries => {
+    this.countriesService.getAllCountries().subscribe(countries => {
       this.countries = countries;
     });
   }

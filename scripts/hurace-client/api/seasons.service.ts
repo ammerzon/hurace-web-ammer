@@ -53,10 +53,10 @@ export class SeasonsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public seasonsGet(observe?: 'body', reportProgress?: boolean): Observable<Array<number>>;
-    public seasonsGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<number>>>;
-    public seasonsGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<number>>>;
-    public seasonsGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAllSeasons(observe?: 'body', reportProgress?: boolean): Observable<Array<number>>;
+    public getAllSeasons(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<number>>>;
+    public getAllSeasons(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<number>>>;
+    public getAllSeasons(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -85,12 +85,12 @@ export class SeasonsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public seasonsSeasonGet(season: number, observe?: 'body', reportProgress?: boolean): Observable<Season>;
-    public seasonsSeasonGet(season: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Season>>;
-    public seasonsSeasonGet(season: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Season>>;
-    public seasonsSeasonGet(season: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getSeason(season: number, observe?: 'body', reportProgress?: boolean): Observable<Season>;
+    public getSeason(season: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Season>>;
+    public getSeason(season: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Season>>;
+    public getSeason(season: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (season === null || season === undefined) {
-            throw new Error('Required parameter season was null or undefined when calling seasonsSeasonGet.');
+            throw new Error('Required parameter season was null or undefined when calling getSeason.');
         }
 
         let headers = this.defaultHeaders;

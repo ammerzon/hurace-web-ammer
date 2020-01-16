@@ -1,1 +1,35 @@
-<p>current-skier works!</p>
+<div *ngIf="currentRun != null; else elseBlock">
+  <mat-grid-list cols="2" rowHeight="250px">
+    <mat-grid-tile>
+      <mat-card class="skier-card">
+        <mat-grid-list cols="2">
+          <mat-grid-tile>
+            <app-image defaultImage="assets/skier-profile-picture-placeholder.jpg"
+                       image="{{currentRun.skier.pictureUrl}}"
+                       rounded="true" width="100px"></app-image>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-card-header class="skier-card-info">
+              <mat-card-title>{{currentRun.skier.firstName}} {{currentRun.skier.lastName}}</mat-card-title>
+              <mat-card-subtitle>
+                {{currentRun.skier.country.code}}
+                <span class="flag-icon flag-icon-{{currentRun.skier.country.code | lowercase}}"></span>
+              </mat-card-subtitle>
+            </mat-card-header>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-list>
+        <mat-list-item>
+          <h1 class="run-heading">{{currentRun.runNumber}}. run</h1>
+        </mat-list-item>
+        <mat-list-item *ngFor="let time of times" mat-list-item>
+          • {{time}}s
+        </mat-list-item>
+      </mat-list>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+<ng-template #elseBlock>No run at the moment!</ng-template>

@@ -18,7 +18,10 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { Metadata } from '../model/metadata';
+import { ProblemDetails } from '../model/problemDetails';
 import { Race } from '../model/race';
+import { Run } from '../model/run';
+import { Skier } from '../model/skier';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -51,15 +54,63 @@ export class RacesService {
 
 
     /**
+     * @param id 
+     * @param skier 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public addRunToRace(id: number, skier?: Skier, observe?: 'body', reportProgress?: boolean): Observable<Run>;
+    public addRunToRace(id: number, skier?: Skier, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Run>>;
+    public addRunToRace(id: number, skier?: Skier, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Run>>;
+    public addRunToRace(id: number, skier?: Skier, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling addRunToRace.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json',
+            'text/json',
+            'application/_*+json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<Run>(`${this.configuration.basePath}/Races/${encodeURIComponent(String(id))}/runs`,
+            skier,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * @param season 
      * @param locationId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public racesGet(season?: number, locationId?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Race>>;
-    public racesGet(season?: number, locationId?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Race>>>;
-    public racesGet(season?: number, locationId?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Race>>>;
-    public racesGet(season?: number, locationId?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAllRaces(season?: number, locationId?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Race>>;
+    public getAllRaces(season?: number, locationId?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Race>>>;
+    public getAllRaces(season?: number, locationId?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Race>>>;
+    public getAllRaces(season?: number, locationId?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (season !== undefined && season !== null) {
@@ -96,10 +147,41 @@ export class RacesService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public racesMetadataGet(observe?: 'body', reportProgress?: boolean): Observable<Metadata>;
-    public racesMetadataGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Metadata>>;
-    public racesMetadataGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Metadata>>;
-    public racesMetadataGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getCurrentRace(observe?: 'body', reportProgress?: boolean): Observable<Race>;
+    public getCurrentRace(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Race>>;
+    public getCurrentRace(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Race>>;
+    public getCurrentRace(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Race>(`${this.configuration.basePath}/Races/current`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRaceMetadata(observe?: 'body', reportProgress?: boolean): Observable<Metadata>;
+    public getRaceMetadata(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Metadata>>;
+    public getRaceMetadata(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Metadata>>;
+    public getRaceMetadata(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 

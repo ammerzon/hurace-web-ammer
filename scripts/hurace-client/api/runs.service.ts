@@ -51,46 +51,15 @@ export class RunsService {
 
 
     /**
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public runsCurrentGet(observe?: 'body', reportProgress?: boolean): Observable<Run>;
-    public runsCurrentGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Run>>;
-    public runsCurrentGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Run>>;
-    public runsCurrentGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-
-        return this.httpClient.get<Run>(`${this.configuration.basePath}/Runs/current`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
      * @param skierId 
      * @param season 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public runsGet(skierId?: number, season?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Run>>;
-    public runsGet(skierId?: number, season?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Run>>>;
-    public runsGet(skierId?: number, season?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Run>>>;
-    public runsGet(skierId?: number, season?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAllRuns(skierId?: number, season?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Run>>;
+    public getAllRuns(skierId?: number, season?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Run>>>;
+    public getAllRuns(skierId?: number, season?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Run>>>;
+    public getAllRuns(skierId?: number, season?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (skierId !== undefined && skierId !== null) {
@@ -124,16 +93,47 @@ export class RunsService {
     }
 
     /**
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getCurrentRun(observe?: 'body', reportProgress?: boolean): Observable<Run>;
+    public getCurrentRun(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Run>>;
+    public getCurrentRun(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Run>>;
+    public getCurrentRun(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Run>(`${this.configuration.basePath}/Runs/current`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * @param id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public runsIdInterimGet(id: number, observe?: 'body', reportProgress?: boolean): Observable<Array<string>>;
-    public runsIdInterimGet(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<string>>>;
-    public runsIdInterimGet(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<string>>>;
-    public runsIdInterimGet(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getInterimTimes(id: number, observe?: 'body', reportProgress?: boolean): Observable<Array<string>>;
+    public getInterimTimes(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<string>>>;
+    public getInterimTimes(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<string>>>;
+    public getInterimTimes(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling runsIdInterimGet.');
+            throw new Error('Required parameter id was null or undefined when calling getInterimTimes.');
         }
 
         let headers = this.defaultHeaders;
@@ -164,15 +164,15 @@ export class RunsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public runsIdLeaderboardRunNumberGet(id: number, runNumber: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Run>>;
-    public runsIdLeaderboardRunNumberGet(id: number, runNumber: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Run>>>;
-    public runsIdLeaderboardRunNumberGet(id: number, runNumber: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Run>>>;
-    public runsIdLeaderboardRunNumberGet(id: number, runNumber: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getLeaderboard(id: number, runNumber: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Run>>;
+    public getLeaderboard(id: number, runNumber: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Run>>>;
+    public getLeaderboard(id: number, runNumber: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Run>>>;
+    public getLeaderboard(id: number, runNumber: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling runsIdLeaderboardRunNumberGet.');
+            throw new Error('Required parameter id was null or undefined when calling getLeaderboard.');
         }
         if (runNumber === null || runNumber === undefined) {
-            throw new Error('Required parameter runNumber was null or undefined when calling runsIdLeaderboardRunNumberGet.');
+            throw new Error('Required parameter runNumber was null or undefined when calling getLeaderboard.');
         }
 
         let headers = this.defaultHeaders;
@@ -198,13 +198,48 @@ export class RunsService {
     }
 
     /**
+     * @param id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public runsMetadataGet(observe?: 'body', reportProgress?: boolean): Observable<Metadata>;
-    public runsMetadataGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Metadata>>;
-    public runsMetadataGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Metadata>>;
-    public runsMetadataGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getRunById(id: number, observe?: 'body', reportProgress?: boolean): Observable<Run>;
+    public getRunById(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Run>>;
+    public getRunById(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Run>>;
+    public getRunById(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getRunById.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Run>(`${this.configuration.basePath}/Runs/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRunMetadata(observe?: 'body', reportProgress?: boolean): Observable<Metadata>;
+    public getRunMetadata(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Metadata>>;
+    public getRunMetadata(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Metadata>>;
+    public getRunMetadata(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 

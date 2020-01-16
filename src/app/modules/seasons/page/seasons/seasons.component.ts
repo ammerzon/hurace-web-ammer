@@ -44,7 +44,7 @@ export class SeasonsComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
-    this.seasonsService.seasonsGet().subscribe(seasons => {
+    this.seasonsService.getAllSeasons().subscribe(seasons => {
       this.seasons = seasons;
       this.selectedSeason = seasons[0];
       this.reloadDataSource();
@@ -53,7 +53,7 @@ export class SeasonsComponent implements OnInit {
 
   private reloadDataSource() {
     this.isLoadingSeasons = true;
-    this.seasonsService.seasonsSeasonGet(this.selectedSeason).subscribe(season => {
+    this.seasonsService.getSeason(this.selectedSeason).subscribe(season => {
       this.amountSkiEvents = season.events.length;
       this.dataSource.data = season.events;
       this.isLoadingSeasons = false;

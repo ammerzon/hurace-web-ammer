@@ -53,10 +53,10 @@ export class CountriesService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public countriesGet(observe?: 'body', reportProgress?: boolean): Observable<Array<Country>>;
-    public countriesGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Country>>>;
-    public countriesGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Country>>>;
-    public countriesGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAllCountries(observe?: 'body', reportProgress?: boolean): Observable<Array<Country>>;
+    public getAllCountries(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Country>>>;
+    public getAllCountries(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Country>>>;
+    public getAllCountries(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 

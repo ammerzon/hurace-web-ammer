@@ -62,7 +62,7 @@ export class SkiersComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(shouldDelete => {
       if (shouldDelete) {
-        this.skierService.skiersIdDelete(skier.id).subscribe(() => {
+        this.skierService.deleteSkier(skier.id).subscribe(() => {
           this.reloadDataSource();
           this.snackBar.open(`Skier ${skier.firstName} ${skier.lastName} has been deleted successfully!`);
         }, (error => {
@@ -82,7 +82,7 @@ export class SkiersComponent implements OnInit {
 
   private reloadDataSource() {
     this.isLoadingSkiers = true;
-    this.skierService.skiersGet().subscribe(skiers => {
+    this.skierService.getAllSkiers().subscribe(skiers => {
       this.amountSkiers = skiers.length;
       this.dataSource.data = skiers;
       this.isLoadingSkiers = false;

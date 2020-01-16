@@ -38,7 +38,7 @@ export class SeasonDetailComponent implements OnInit {
     this.isLoadingRaces = true;
 
     this.route.params.subscribe(params => {
-      this.racesService.racesGet(params.seasonsId, params.locationId).subscribe(races => {
+      this.racesService.getAllRaces(params.seasonsId, params.locationId).subscribe(races => {
         this.firstRace = races[0];
         this.dataSource.data = races;
         this.isLoadingRaces = false;

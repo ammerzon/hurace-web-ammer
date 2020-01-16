@@ -1,1 +1,45 @@
-<p>leader-board works!</p>
+<div class="skier-table mat-elevation-z8">
+  <div *ngIf="isLoadingBoard" class="loading-shade">
+    <mat-spinner *ngIf="isLoadingBoard"></mat-spinner>
+  </div>
+
+  <div>
+    <table [dataSource]="dataSource" mat-table matSort>
+      <ng-container matColumnDef="position">
+        <th class="leaderboard-entry-small" *matHeaderCellDef mat-header-cell></th>
+        <td class="leaderboard-entry-small" *matCellDef="let row" mat-cell>{{row.endPosition}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="profilePicture">
+        <th class="leaderboard-entry-small" *matHeaderCellDef mat-header-cell></th>
+        <td class="leaderboard-entry-small" *matCellDef="let row" mat-cell>
+          <app-image defaultImage="assets/skier-profile-picture-placeholder.jpg" image="{{row.skier.pictureUrl}}"
+                     rounded="true"></app-image>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th class="leaderboard-entry-large" *matHeaderCellDef mat-header-cell>Name</th>
+        <td class="leaderboard-entry-large" *matCellDef="let row" mat-cell>{{row.skier.firstName}} {{row.skier.lastName}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="country">
+        <th class="leaderboard-entry-medium" *matHeaderCellDef mat-header-cell>Country</th>
+        <td class="leaderboard-entry-medium" *matCellDef="let row" mat-cell>
+          {{row.skier.country.code}}
+          <span class="flag-icon flag-icon-{{row.skier.country.code | lowercase}}"></span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="time">
+        <th class="leaderboard-entry-medium" *matHeaderCellDef mat-header-cell>Time</th>
+        <td class="leaderboard-entry-medium" *matCellDef="let row" mat-cell>{{row.totalTime}}</td>
+      </ng-container>
+
+      <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+    </table>
+  </div>
+
+  <mat-paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>
+</div>

@@ -52,17 +52,14 @@ export class SkiersService {
 
 
     /**
-     * @param id 
+     * @param skier 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getById(id: number, observe?: 'body', reportProgress?: boolean): Observable<Skier>;
-    public getById(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Skier>>;
-    public getById(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Skier>>;
-    public getById(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getById.');
-        }
+    public createSkier(skier?: Skier, observe?: 'body', reportProgress?: boolean): Observable<Skier>;
+    public createSkier(skier?: Skier, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Skier>>;
+    public createSkier(skier?: Skier, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Skier>>;
+    public createSkier(skier?: Skier, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -76,7 +73,53 @@ export class SkiersService {
         }
 
 
-        return this.httpClient.get<Skier>(`${this.configuration.basePath}/Skiers/${encodeURIComponent(String(id))}`,
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json',
+            'text/json',
+            'application/_*+json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<Skier>(`${this.configuration.basePath}/Skiers`,
+            skier,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteSkier(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteSkier(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteSkier(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteSkier(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling deleteSkier.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.delete<any>(`${this.configuration.basePath}/Skiers/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -92,10 +135,10 @@ export class SkiersService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public skiersGet(name?: string, gender?: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Skier>>;
-    public skiersGet(name?: string, gender?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Skier>>>;
-    public skiersGet(name?: string, gender?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Skier>>>;
-    public skiersGet(name?: string, gender?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAllSkiers(name?: string, gender?: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Skier>>;
+    public getAllSkiers(name?: string, gender?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Skier>>>;
+    public getAllSkiers(name?: string, gender?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Skier>>>;
+    public getAllSkiers(name?: string, gender?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (name !== undefined && name !== null) {
@@ -133,18 +176,19 @@ export class SkiersService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public skiersIdDelete(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public skiersIdDelete(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public skiersIdDelete(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public skiersIdDelete(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getSkierById(id: number, observe?: 'body', reportProgress?: boolean): Observable<Skier>;
+    public getSkierById(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Skier>>;
+    public getSkierById(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Skier>>;
+    public getSkierById(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling skiersIdDelete.');
+            throw new Error('Required parameter id was null or undefined when calling getSkierById.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         const httpHeaderAccepts: string[] = [
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -152,7 +196,38 @@ export class SkiersService {
         }
 
 
-        return this.httpClient.delete<any>(`${this.configuration.basePath}/Skiers/${encodeURIComponent(String(id))}`,
+        return this.httpClient.get<Skier>(`${this.configuration.basePath}/Skiers/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getSkierMetadata(observe?: 'body', reportProgress?: boolean): Observable<Metadata>;
+    public getSkierMetadata(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Metadata>>;
+    public getSkierMetadata(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Metadata>>;
+    public getSkierMetadata(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Metadata>(`${this.configuration.basePath}/Skiers/metadata`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -168,12 +243,12 @@ export class SkiersService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public skiersIdPut(id: number, skier?: Skier, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public skiersIdPut(id: number, skier?: Skier, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public skiersIdPut(id: number, skier?: Skier, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public skiersIdPut(id: number, skier?: Skier, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateSkier(id: number, skier?: Skier, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public updateSkier(id: number, skier?: Skier, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public updateSkier(id: number, skier?: Skier, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public updateSkier(id: number, skier?: Skier, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling skiersIdPut.');
+            throw new Error('Required parameter id was null or undefined when calling updateSkier.');
         }
 
         let headers = this.defaultHeaders;
@@ -199,81 +274,6 @@ export class SkiersService {
         }
 
         return this.httpClient.put<any>(`${this.configuration.basePath}/Skiers/${encodeURIComponent(String(id))}`,
-            skier,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public skiersMetadataGet(observe?: 'body', reportProgress?: boolean): Observable<Metadata>;
-    public skiersMetadataGet(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Metadata>>;
-    public skiersMetadataGet(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Metadata>>;
-    public skiersMetadataGet(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-
-        return this.httpClient.get<Metadata>(`${this.configuration.basePath}/Skiers/metadata`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * @param skier 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public skiersPost(skier?: Skier, observe?: 'body', reportProgress?: boolean): Observable<Skier>;
-    public skiersPost(skier?: Skier, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Skier>>;
-    public skiersPost(skier?: Skier, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Skier>>;
-    public skiersPost(skier?: Skier, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        const httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json',
-            'text/json',
-            'application/_*+json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.post<Skier>(`${this.configuration.basePath}/Skiers`,
             skier,
             {
                 withCredentials: this.configuration.withCredentials,

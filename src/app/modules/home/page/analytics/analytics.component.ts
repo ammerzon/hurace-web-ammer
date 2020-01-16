@@ -12,13 +12,13 @@ export class AnalyticsComponent implements OnInit {
   amountRaces: number;
 
   constructor(private racesService: RacesService, private runsService: RunsService, private skiersService: SkiersService) {
-    racesService.racesMetadataGet().subscribe(metadata => {
+    racesService.getRaceMetadata().subscribe(metadata => {
       this.amountRaces = metadata.count;
     });
-    runsService.runsMetadataGet().subscribe(metadata => {
+    runsService.getRunMetadata().subscribe(metadata => {
       this.amountRuns = metadata.count;
     });
-    skiersService.skiersMetadataGet().subscribe(metadata => {
+    skiersService.getSkierMetadata().subscribe(metadata => {
       this.amountSkiers = metadata.count;
     });
   }
