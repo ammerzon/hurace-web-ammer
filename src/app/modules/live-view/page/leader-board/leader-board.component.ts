@@ -1,11 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Subject} from 'rxjs';
+import {interval, Subject} from 'rxjs';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {Run} from '@hurace-client/api/model/run';
 import {RunsService} from '@hurace-client/api/api/runs.service';
 import {mergeMap} from 'rxjs/operators';
 import {RacesService} from '@hurace-client/api/api/races.service';
 import {Race} from '@hurace-client/api/model/race';
+import {environment} from '@env';
 
 @Component({
   selector: 'app-leader-board',
@@ -28,14 +29,17 @@ export class LeaderBoardComponent implements OnInit {
   ngOnInit() {
     this.runNumber$.subscribe(runNumber => {
       this.currentRunNumber = runNumber;
-      this.reloadDataSource();
+      this.reloadDataSource(true);
+    });
+    interval(environment.pollingPeriod).subscribe(_ => {
+      this.reloadDataSource(false);
     });
     this.dataSource.paginator = this.paginator;
-    this.reloadDataSource();
+    this.reloadDataSource(true);
   }
 
-  private reloadDataSource() {
-    this.isLoadingBoard = true;
+  private reloadDataSource(withIndicator: boolean) {
+    this.isLoadingBoard = withIndicator;
 
     this.raceService.getCurrentRace().subscribe(race => {
       this.currentRace = race;

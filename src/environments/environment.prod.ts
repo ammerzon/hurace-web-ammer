@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  basePath: '${API_INFRASTRUCTURE_PATH}'
+  basePath: '${API_INFRASTRUCTURE_PATH}',
+  pollingPeriod: 5000
 };

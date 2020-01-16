@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   huraceApiUrl: 'https://127.0.0.1:5001',
   authUrl: 'https://demo.identityserver.io',
-  originUrl: 'https://localhost:4200'
+  originUrl: 'https://localhost:4200',
+  pollingPeriod: 5000
 };
 
 /*

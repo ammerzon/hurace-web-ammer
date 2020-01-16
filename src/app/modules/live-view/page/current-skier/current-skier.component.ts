@@ -3,6 +3,8 @@ import {RunsService} from '@hurace-client/api/api/runs.service';
 import {Run} from '@hurace-client/api/model/run';
 import {Duration, Moment} from 'moment';
 import * as moment from 'moment';
+import {interval} from 'rxjs';
+import {environment} from '@env';
 
 @Component({
   selector: 'app-current-skier',
@@ -17,6 +19,13 @@ export class CurrentSkierComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.reloadCurrentRun();
+    interval(environment.pollingPeriod).subscribe(_ => {
+      this.reloadCurrentRun();
+    });
+  }
+
+  private reloadCurrentRun() {
     this.runsService.getCurrentRun().subscribe(currentRun => {
       this.currentRun = currentRun;
       this.runsService.getInterimTimes(this.currentRun.id).subscribe(times => {
@@ -24,5 +33,4 @@ export class CurrentSkierComponent implements OnInit {
       });
     });
   }
-
 }
