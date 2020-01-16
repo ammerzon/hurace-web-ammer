@@ -1,0 +1,54 @@
+<h3 class="mat-h3">Select the race</h3>
+<form [formGroup]="searchRace">
+  <mat-form-field class="race-search">
+    <input [matAutocomplete]="raceAuto" formControlName="race" matInput placeholder="Race" required type="text">
+    <mat-autocomplete #raceAuto="matAutocomplete" (optionSelected)="raceSelected($event.option.value)"
+                      [displayWith]="displayFunctionRace.bind(this)">
+      <mat-option *ngFor="let race of filteredRaces | async" [value]="race.id">
+        {{race.name}}
+        <span class="flag-icon flag-icon-{{race.location.country.code | lowercase}}"></span>
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error
+      *ngIf="searchRace.get('race').hasError('validrace') && !searchRace.get('race').hasError('required')">
+      Please enter a valid race
+    </mat-error>
+    <mat-error *ngIf="searchRace.get('race').hasError('required')">
+      The race is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <h1 class="run-heading">{{runNumber}}. Run</h1>
+</form>
+
+<mat-grid-list cols="2" rowHeight="500px">
+  <mat-grid-tile>
+    <mat-list>
+      <mat-list-item *ngFor="let time of firstSkierTimes" mat-list-item>
+        • {{time}}s
+      </mat-list-item>
+    </mat-list>
+    <mat-divider [vertical]="true" style="height: 100%;"></mat-divider>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-list>
+      <form [formGroup]="searchSkier">
+        <mat-form-field class="skier-search">
+          <input [matAutocomplete]="runAuto" formControlName="run" matInput placeholder="Skier" required type="text">
+          <mat-autocomplete #runAuto="matAutocomplete" (optionSelected)="secondSkierSelected($event.option.value)"
+                            [displayWith]="displayFunctionSkier.bind(this)">
+            <mat-option *ngFor="let run of filteredSecondRuns | async" [value]="run.id">
+              {{run.skier.firstName}} {{run.skier.lastName}}
+              <span class="flag-icon flag-icon-{{run.skier.country.code | lowercase}}"></span>
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="searchSkier.get('run').hasError('required')">
+            A second skier is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </form>
+      <mat-list-item *ngFor="let time of secondSkierTimes" mat-list-item>
+        • {{time}}s
+      </mat-list-item>
+    </mat-list>
+  </mat-grid-tile>
+</mat-grid-list>

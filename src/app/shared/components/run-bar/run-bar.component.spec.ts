@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { RunBarComponent } from './run-bar.component';
+import {RunBarComponent} from './run-bar.component';
 
 describe('RunBarComponent', () => {
   let component: RunBarComponent;
@@ -8,9 +8,9 @@ describe('RunBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RunBarComponent ]
+      declarations: [RunBarComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

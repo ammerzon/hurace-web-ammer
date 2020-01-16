@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {OAuthService} from 'angular-oauth2-oidc';
-import {BehaviorSubject, Subject} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

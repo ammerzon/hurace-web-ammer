@@ -7,7 +7,7 @@ import {Gender} from '@hurace-client/api/model/gender';
 import {RunsService} from '@hurace-client/api/api/runs.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {Country, Race, RacesService, RaceStatus} from '@hurace-client/api/index';
+import {Race, RacesService} from '@hurace-client/api/index';
 import {map, startWith} from 'rxjs/operators';
 import {RaceValidatorService} from '@app/validators/race-validator.service';
 
@@ -19,7 +19,6 @@ import {RaceValidatorService} from '@app/validators/race-validator.service';
 export class SkierEditComponent implements OnInit {
 
   @ViewChild('skierDetail', {static: true}) skierDetail;
-  private loadedSkier: Skier;
   races: Race[];
   filteredRaces: Observable<Race[]>;
   nominateForm = new FormGroup({
@@ -28,6 +27,7 @@ export class SkierEditComponent implements OnInit {
       this.raceValidatorService.validRaceValidator(this.races)
     ]),
   });
+  private loadedSkier: Skier;
 
   constructor(private router: Router, private route: ActivatedRoute, private raceValidatorService: RaceValidatorService,
               private skierService: SkiersService, private runService: RunsService, private racesService: RacesService,
@@ -51,18 +51,6 @@ export class SkierEditComponent implements OnInit {
     });
   }
 
-  private refreshOpenRacesForSkier() {
-    this.racesService.getOpenRacesForSkier(this.loadedSkier.id).subscribe(races => {
-      this.races = races;
-      this.nominateForm.controls['race'].setValidators([Validators.required, this.raceValidatorService.validRaceValidator(this.races)]);
-      this.filteredRaces = this.nominateForm.get('race').valueChanges
-        .pipe(
-          startWith(''),
-          map(value => this.filter(value))
-        );
-    });
-  }
-
   updateSkier() {
     const pictureUrl = this.skierDetail.skierForm.get('pictureUrl').value;
     const skier: Skier = {
@@ -81,13 +69,8 @@ export class SkierEditComponent implements OnInit {
     });
   }
 
-  private filter(value: string): Race[] {
-    const filterValue = value.toLowerCase();
-    return this.races.filter(race => race.name.toLowerCase().includes(filterValue));
-  }
-
   nominateSkier() {
-    const selectedRace = this.races.filter(race => race.name === this.nominateForm.get('race').value)[0];
+    const selectedRace = this.races.filter(race => race.id === this.nominateForm.get('race').value)[0];
     this.racesService.addRunToRace(selectedRace.id, this.loadedSkier).subscribe(_ => {
       this.snackBar.open(`Skier ${this.loadedSkier.firstName} ${this.loadedSkier.lastName} nominated for ${selectedRace.name}!`);
       this.nominateForm.reset();
@@ -95,5 +78,30 @@ export class SkierEditComponent implements OnInit {
     }, error => {
       this.snackBar.open(`Skier ${this.loadedSkier.firstName} ${this.loadedSkier.lastName} could not be nominated!`);
     });
+  }
+
+  private displayFunctionRace(id?: number) {
+    if (id === undefined || this.races === undefined) {
+      return;
+    }
+    const race = this.races.filter(s => s.id === id)[0];
+    return id ? `${race.name}` : undefined;
+  }
+
+  private refreshOpenRacesForSkier() {
+    this.racesService.getOpenRacesForSkier(this.loadedSkier.id).subscribe(races => {
+      this.races = races;
+      this.nominateForm.controls['race'].setValidators([Validators.required, this.raceValidatorService.validRaceValidator(this.races)]);
+      this.filteredRaces = this.nominateForm.get('race').valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this.filter(value))
+        );
+    });
+  }
+
+  private filter(value: string): Race[] {
+    const filterValue = value.toLowerCase();
+    return this.races.filter(race => race.name.toLowerCase().includes(filterValue));
   }
 }

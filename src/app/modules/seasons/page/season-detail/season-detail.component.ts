@@ -1,9 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {RacesService} from '@hurace-client/api/api/races.service';
-import {Location} from '@hurace-client/api/model/location';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {SkiEvent} from '@hurace-client/api/model/skiEvent';
 import {Race} from '@hurace-client/api/model/race';
 
 @Component({
@@ -12,13 +10,12 @@ import {Race} from '@hurace-client/api/model/race';
   styleUrls: ['./season-detail.component.scss']
 })
 export class SeasonDetailComponent implements OnInit {
-  private firstRace: Race;
   isLoadingRaces: boolean;
   dataSource: MatTableDataSource<Race>;
   displayedColumns: string[] = ['date', 'raceType', 'gender', 'status'];
-
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+  private firstRace: Race;
 
   constructor(private router: Router, private route: ActivatedRoute, private racesService: RacesService) {
     this.dataSource = new MatTableDataSource<Race>();

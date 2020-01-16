@@ -1,1 +1,20 @@
-<p>analysis works!</p>
+<app-run-bar #runBar></app-run-bar>
+
+<h1 class="mat-h1">Skier analysis</h1>
+<form [formGroup]="searchSkier">
+  <mat-form-field class="skier-search">
+    <input [matAutocomplete]="auto" formControlName="skier" matInput placeholder="Skier" required type="text">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="skierSelected($event.option.value)"
+                      [displayWith]="displayFn.bind(this)">
+      <mat-option *ngFor="let skier of filteredSkier | async" [value]="skier.id">
+        {{skier.firstName}} {{skier.lastName}}
+        <span class="flag-icon flag-icon-{{skier.country.code | lowercase}}"></span>
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="searchSkier.get('skier').hasError('required')">
+      The skier is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+</form>
+
+<app-time-comparison #timeComparison></app-time-comparison>

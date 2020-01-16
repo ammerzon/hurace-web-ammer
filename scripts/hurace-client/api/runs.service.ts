@@ -128,6 +128,41 @@ export class RunsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
+    public getInterimDiffTimes(id: number, observe?: 'body', reportProgress?: boolean): Observable<Array<string>>;
+    public getInterimDiffTimes(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<string>>>;
+    public getInterimDiffTimes(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<string>>>;
+    public getInterimDiffTimes(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getInterimDiffTimes.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<string>>(`${this.configuration.basePath}/Runs/${encodeURIComponent(String(id))}/interimdiff`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
     public getInterimTimes(id: number, observe?: 'body', reportProgress?: boolean): Observable<Array<string>>;
     public getInterimTimes(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<string>>>;
     public getInterimTimes(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<string>>>;

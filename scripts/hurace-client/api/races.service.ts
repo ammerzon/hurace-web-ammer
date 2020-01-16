@@ -144,6 +144,41 @@ export class RacesService {
     }
 
     /**
+     * @param id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getClosedRacesForSkier(id: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Race>>;
+    public getClosedRacesForSkier(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Race>>>;
+    public getClosedRacesForSkier(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Race>>>;
+    public getClosedRacesForSkier(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getClosedRacesForSkier.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Race>>(`${this.configuration.basePath}/Races/closed/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -232,6 +267,48 @@ export class RacesService {
 
         return this.httpClient.get<Metadata>(`${this.configuration.basePath}/Races/metadata`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param id 
+     * @param runNumber 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getRunsForRace(id: number, runNumber?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Run>>;
+    public getRunsForRace(id: number, runNumber?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Run>>>;
+    public getRunsForRace(id: number, runNumber?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Run>>>;
+    public getRunsForRace(id: number, runNumber?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getRunsForRace.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (runNumber !== undefined && runNumber !== null) {
+            queryParameters = queryParameters.set('runNumber', <any>runNumber);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Run>>(`${this.configuration.basePath}/Races/${encodeURIComponent(String(id))}/runs`,
+            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

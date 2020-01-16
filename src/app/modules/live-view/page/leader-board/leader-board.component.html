@@ -1,4 +1,4 @@
-<div class="mat-h4" *ngIf="currentRace">
+<div *ngIf="currentRace" class="mat-h4">
   {{currentRace.name}}
   ({{currentRace.location.country.code}}
   <span class="flag-icon flag-icon-{{currentRace.location.country.code | lowercase}}"></span>)
@@ -11,34 +11,35 @@
   <div>
     <table [dataSource]="dataSource" mat-table matSort>
       <ng-container matColumnDef="position">
-        <th class="leaderboard-entry-small" *matHeaderCellDef mat-header-cell></th>
-        <td class="leaderboard-entry-small" *matCellDef="let row" mat-cell>{{row.endPosition}}</td>
+        <th *matHeaderCellDef class="leaderboard-entry-small" mat-header-cell></th>
+        <td *matCellDef="let row" class="leaderboard-entry-small" mat-cell>{{row.endPosition}}</td>
       </ng-container>
 
       <ng-container matColumnDef="profilePicture">
-        <th class="leaderboard-entry-small" *matHeaderCellDef mat-header-cell></th>
-        <td class="leaderboard-entry-small" *matCellDef="let row" mat-cell>
+        <th *matHeaderCellDef class="leaderboard-entry-small" mat-header-cell></th>
+        <td *matCellDef="let row" class="leaderboard-entry-small" mat-cell>
           <app-image defaultImage="assets/skier-profile-picture-placeholder.jpg" image="{{row.skier.pictureUrl}}"
                      rounded="true"></app-image>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <th class="leaderboard-entry-large" *matHeaderCellDef mat-header-cell>Name</th>
-        <td class="leaderboard-entry-large" *matCellDef="let row" mat-cell>{{row.skier.firstName}} {{row.skier.lastName}}</td>
+        <th *matHeaderCellDef class="leaderboard-entry-large" mat-header-cell>Name</th>
+        <td *matCellDef="let row" class="leaderboard-entry-large"
+            mat-cell>{{row.skier.firstName}} {{row.skier.lastName}}</td>
       </ng-container>
 
       <ng-container matColumnDef="country">
-        <th class="leaderboard-entry-medium" *matHeaderCellDef mat-header-cell>Country</th>
-        <td class="leaderboard-entry-medium" *matCellDef="let row" mat-cell>
+        <th *matHeaderCellDef class="leaderboard-entry-medium" mat-header-cell>Country</th>
+        <td *matCellDef="let row" class="leaderboard-entry-medium" mat-cell>
           {{row.skier.country.code}}
           <span class="flag-icon flag-icon-{{row.skier.country.code | lowercase}}"></span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="time">
-        <th class="leaderboard-entry-medium" *matHeaderCellDef mat-header-cell>Time</th>
-        <td class="leaderboard-entry-medium" *matCellDef="let row" mat-cell>{{row.totalTime}}</td>
+        <th *matHeaderCellDef class="leaderboard-entry-medium" mat-header-cell>Time</th>
+        <td *matCellDef="let row" class="leaderboard-entry-medium" mat-cell>{{row.totalTime}}</td>
       </ng-container>
 
       <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>

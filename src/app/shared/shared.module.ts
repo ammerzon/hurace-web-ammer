@@ -7,10 +7,12 @@ import {GenderIndicatorComponent} from '@shared/components/gender-indicator/gend
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {RaceStatusIndicatorComponent} from '@shared/components/race-status-indicator/race-status-indicator.component';
+import {RunBarComponent} from '@shared/components/run-bar/run-bar.component';
 
 @NgModule({
-  declarations: [ImageComponent, GenderIndicatorComponent, RaceStatusIndicatorComponent],
+  declarations: [ImageComponent, GenderIndicatorComponent, RaceStatusIndicatorComponent, RunBarComponent],
   imports: [
+    MaterialModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -28,7 +30,8 @@ import {RaceStatusIndicatorComponent} from '@shared/components/race-status-indic
     LazyLoadImageModule,
     ImageComponent,
     GenderIndicatorComponent,
-    RaceStatusIndicatorComponent
+    RaceStatusIndicatorComponent,
+    RunBarComponent
   ]
 })
 export class SharedModule {

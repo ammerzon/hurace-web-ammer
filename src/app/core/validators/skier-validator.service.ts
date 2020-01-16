@@ -1,7 +1,6 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AbstractControl, ValidatorFn} from '@angular/forms';
 import {CountriesService, Country} from '@hurace-client/api';
-import {map, startWith} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +15,7 @@ export class SkierValidatorService {
   }
 
   validUrlValidator(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
+    return (control: AbstractControl): { [key: string]: any } | null => {
       const inputElement: HTMLInputElement = document.createElement('input');
       inputElement.type = 'url';
       inputElement.value = control.value;
@@ -25,8 +24,10 @@ export class SkierValidatorService {
   }
 
   validCountryValidator(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
-      if (this.countries === undefined) { return null; }
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (this.countries === undefined) {
+        return null;
+      }
       const validCountry = this.countries.map(country => country.code).indexOf(control.value) !== -1;
       return !validCountry ? {'validcountry': {value: control.value}} : null;
     };

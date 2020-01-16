@@ -1,9 +1,9 @@
 <h1 class="mat-display-1">Season
-<mat-form-field appearance="none" class="season-selection">
-  <mat-select [(ngModel)]="selectedSeason" (selectionChange)="updateSeasons($event)">
-    <mat-option *ngFor="let season of seasons" [value]="season">{{season}}</mat-option>
-  </mat-select>
-</mat-form-field>
+  <mat-form-field appearance="none" class="season-selection">
+    <mat-select (selectionChange)="updateSeasons($event)" [(ngModel)]="selectedSeason">
+      <mat-option *ngFor="let season of seasons" [value]="season">{{season}}</mat-option>
+    </mat-select>
+  </mat-form-field>
 </h1>
 
 <div class="mat-elevation-z8">
@@ -40,7 +40,8 @@
         <th *matHeaderCellDef mat-header-cell>Race types</th>
         <td *matCellDef="let row" mat-cell>
           <mat-nav-list class="list-horizontal">
-            <mat-list-item mat-list-item *ngFor="let raceType of row.raceTypes">{{ raceType | raceType }}</mat-list-item>
+            <mat-list-item *ngFor="let raceType of row.raceTypes"
+                           mat-list-item>{{ raceType | raceType }}</mat-list-item>
           </mat-nav-list>
         </td>
       </ng-container>
@@ -49,7 +50,7 @@
         <th *matHeaderCellDef mat-header-cell>Genders</th>
         <td *matCellDef="let row" mat-cell>
           <mat-nav-list class="list-horizontal">
-            <mat-list-item mat-list-item *ngFor="let gender of row.genders">
+            <mat-list-item *ngFor="let gender of row.genders" mat-list-item>
               <app-gender-indicator gender="{{gender}}"></app-gender-indicator>
             </mat-list-item>
           </mat-nav-list>
@@ -57,7 +58,8 @@
       </ng-container>
 
       <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
-      <tr *matRowDef="let row; columns: displayedColumns;" mat-row (click)="showSkiEventDetails(row)" class="season-element-row"></tr>
+      <tr (click)="showSkiEventDetails(row)" *matRowDef="let row; columns: displayedColumns;" class="season-element-row"
+          mat-row></tr>
     </table>
   </div>
 

@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { RaceStatusIndicatorComponent } from './race-status-indicator.component';
+import {RaceStatusIndicatorComponent} from './race-status-indicator.component';
 
 describe('RaceStatusIndicatorComponent', () => {
   let component: RaceStatusIndicatorComponent;
@@ -8,9 +8,9 @@ describe('RaceStatusIndicatorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RaceStatusIndicatorComponent ]
+      declarations: [RaceStatusIndicatorComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

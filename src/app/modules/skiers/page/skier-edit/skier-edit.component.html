@@ -17,8 +17,8 @@
         <form [formGroup]="nominateForm">
           <mat-form-field class="race-search">
             <input [matAutocomplete]="auto" formControlName="race" matInput placeholder="Race" required type="text">
-            <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let race of filteredRaces | async" [value]="race.name">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFunctionRace.bind(this)">
+              <mat-option *ngFor="let race of filteredRaces | async" [value]="race.id">
                 {{race.name}}
                 <span class="flag-icon flag-icon-{{race.location.country.code | lowercase}}"></span>
               </mat-option>
@@ -28,13 +28,14 @@
               Please enter a valid race
             </mat-error>
             <mat-error *ngIf="nominateForm.get('race').hasError('required')">
-              The country is <strong>required</strong>
+              A race is <strong>required</strong>
             </mat-error>
           </mat-form-field>
         </form>
       </mat-list-item>
       <mat-list-item>
-        <button mat-raised-button color="accent" [disabled]="!nominateForm.valid" (click)="nominateSkier()">Nominate</button>
+        <button (click)="nominateSkier()" [disabled]="!nominateForm.valid" color="accent" mat-raised-button>Nominate
+        </button>
       </mat-list-item>
     </mat-list>
   </mat-grid-tile>

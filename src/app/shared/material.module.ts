@@ -2,7 +2,8 @@ import {NgModule} from '@angular/core';
 import {
   MatAutocompleteModule,
   MatButtonModule,
-  MatCardModule, MatDatepickerModule,
+  MatCardModule,
+  MatDatepickerModule,
   MatDialogModule,
   MatFormFieldModule,
   MatGridListModule,
@@ -10,7 +11,10 @@ import {
   MatInputModule,
   MatListModule,
   MatPaginatorModule,
-  MatProgressSpinnerModule, MatRadioModule, MatSelectModule, MatSnackBarModule,
+  MatProgressSpinnerModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatSnackBarModule,
   MatSortModule,
   MatTableModule,
   MatToolbarModule

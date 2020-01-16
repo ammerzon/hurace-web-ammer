@@ -7,11 +7,11 @@ import {CoreModule} from '@app/core.module';
 
 @NgModule({
   declarations: [SeasonsComponent, SeasonDetailComponent],
-    imports: [
-        SeasonsRoutingModule,
-        SharedModule,
-        CoreModule
-    ]
+  imports: [
+    SeasonsRoutingModule,
+    SharedModule,
+    CoreModule
+  ]
 })
 export class SeasonsModule {
 }

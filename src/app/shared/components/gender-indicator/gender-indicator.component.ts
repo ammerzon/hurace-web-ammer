@@ -9,7 +9,8 @@ import {Gender} from '@hurace-client/api/model/gender';
 export class GenderIndicatorComponent implements OnInit {
   @Input() gender: Gender;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

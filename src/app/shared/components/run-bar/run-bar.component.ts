@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
 
 @Component({
@@ -9,7 +9,8 @@ import {Subject} from 'rxjs';
 export class RunBarComponent implements OnInit {
   currentRunNumber$ = new Subject<number>();
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

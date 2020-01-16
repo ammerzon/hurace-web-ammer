@@ -11,7 +11,8 @@ export class ImageComponent implements OnInit {
   @Input() rounded = false;
   @Input() width = '50px';
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

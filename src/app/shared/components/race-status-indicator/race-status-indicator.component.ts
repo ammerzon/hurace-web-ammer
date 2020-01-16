@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Gender} from '@hurace-client/api/model/gender';
 import {RaceStatus} from '@hurace-client/api/model/raceStatus';
 
 @Component({
@@ -10,7 +9,8 @@ import {RaceStatus} from '@hurace-client/api/model/raceStatus';
 export class RaceStatusIndicatorComponent implements OnInit {
   @Input() status: RaceStatus;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

@@ -1,8 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {SeasonsService} from '@hurace-client/api/api/seasons.service';
-import {map} from 'rxjs/operators';
 import {MatPaginator, MatSelectChange, MatSort, MatTableDataSource} from '@angular/material';
-import {Skier} from '@hurace-client/api/model/skier';
 import {SkiEvent} from '@hurace-client/api/model/skiEvent';
 import {Router} from '@angular/router';
 
@@ -51,6 +49,14 @@ export class SeasonsComponent implements OnInit {
     });
   }
 
+  updateSeasons($event: MatSelectChange) {
+    this.reloadDataSource();
+  }
+
+  showSkiEventDetails(row: any) {
+    this.router.navigate(['/seasons/', this.selectedSeason, row.location.id]);
+  }
+
   private reloadDataSource() {
     this.isLoadingSeasons = true;
     this.seasonsService.getSeason(this.selectedSeason).subscribe(season => {
@@ -58,13 +64,5 @@ export class SeasonsComponent implements OnInit {
       this.dataSource.data = season.events;
       this.isLoadingSeasons = false;
     });
-  }
-
-  updateSeasons($event: MatSelectChange) {
-    this.reloadDataSource();
-  }
-
-  showSkiEventDetails(row: any) {
-    this.router.navigate(['/seasons/', this.selectedSeason, row.location.id]);
   }
 }

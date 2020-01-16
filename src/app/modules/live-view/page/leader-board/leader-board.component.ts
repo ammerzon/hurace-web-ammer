@@ -3,7 +3,6 @@ import {interval, Subject} from 'rxjs';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {Run} from '@hurace-client/api/model/run';
 import {RunsService} from '@hurace-client/api/api/runs.service';
-import {mergeMap} from 'rxjs/operators';
 import {RacesService} from '@hurace-client/api/api/races.service';
 import {Race} from '@hurace-client/api/model/race';
 import {environment} from '@env';
