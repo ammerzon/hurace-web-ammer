@@ -13,6 +13,7 @@ import {environment} from '@env';
 import {BASE_PATH} from '@hurace-client/api';
 import {registerLocaleData} from '@angular/common';
 import localeAt from '@angular/common/locales/de-AT';
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS} from '@angular/material';
 
 registerLocaleData(localeAt, 'de-AT');
 
@@ -30,7 +31,7 @@ registerLocaleData(localeAt, 'de-AT');
     CoreModule,
     SharedModule
   ],
-  providers: [{provide: BASE_PATH, useValue: environment.huraceApiUrl}],
+  providers: [{provide: BASE_PATH, useValue: environment.huraceApiUrl}, {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

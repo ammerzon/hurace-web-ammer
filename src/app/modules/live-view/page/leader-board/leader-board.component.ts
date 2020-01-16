@@ -5,6 +5,7 @@ import {Run} from '@hurace-client/api/model/run';
 import {RunsService} from '@hurace-client/api/api/runs.service';
 import {mergeMap} from 'rxjs/operators';
 import {RacesService} from '@hurace-client/api/api/races.service';
+import {Race} from '@hurace-client/api/model/race';
 
 @Component({
   selector: 'app-leader-board',
@@ -14,6 +15,7 @@ import {RacesService} from '@hurace-client/api/api/races.service';
 export class LeaderBoardComponent implements OnInit {
   runNumber$ = new Subject<number>();
   isLoadingBoard: boolean;
+  currentRace: Race;
   dataSource: MatTableDataSource<Run>;
   displayedColumns: string[] = ['position', 'profilePicture', 'name', 'country', 'time'];
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -36,6 +38,7 @@ export class LeaderBoardComponent implements OnInit {
     this.isLoadingBoard = true;
 
     this.raceService.getCurrentRace().subscribe(race => {
+      this.currentRace = race;
       if (race == null) {
         this.isLoadingBoard = false;
       } else {

@@ -175,6 +175,41 @@ export class RacesService {
     }
 
     /**
+     * @param id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getOpenRacesForSkier(id: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Race>>;
+    public getOpenRacesForSkier(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Race>>>;
+    public getOpenRacesForSkier(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Race>>>;
+    public getOpenRacesForSkier(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getOpenRacesForSkier.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Array<Race>>(`${this.configuration.basePath}/Races/open/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */

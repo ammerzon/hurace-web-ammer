@@ -5,6 +5,11 @@ import {MatSnackBar} from '@angular/material';
 import {Skier} from '@hurace-client/api/model/skier';
 import {Gender} from '@hurace-client/api/model/gender';
 import {RunsService} from '@hurace-client/api/api/runs.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {Country, Race, RacesService, RaceStatus} from '@hurace-client/api/index';
+import {map, startWith} from 'rxjs/operators';
+import {RaceValidatorService} from '@app/validators/race-validator.service';
 
 @Component({
   selector: 'app-skier-edit',
@@ -15,14 +20,24 @@ export class SkierEditComponent implements OnInit {
 
   @ViewChild('skierDetail', {static: true}) skierDetail;
   private loadedSkier: Skier;
+  races: Race[];
+  filteredRaces: Observable<Race[]>;
+  nominateForm = new FormGroup({
+    race: new FormControl('', [
+      Validators.required,
+      this.raceValidatorService.validRaceValidator(this.races)
+    ]),
+  });
 
-  constructor(private router: Router, private route: ActivatedRoute, private skierService: SkiersService,
-              private runService: RunsService, private snackBar: MatSnackBar) {
+  constructor(private router: Router, private route: ActivatedRoute, private raceValidatorService: RaceValidatorService,
+              private skierService: SkiersService, private runService: RunsService, private racesService: RacesService,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.skierService.getSkierById(params.id).subscribe(skier => {
+        skier.pictureUrl = skier.pictureUrl === null ? '' : skier.pictureUrl;
         this.loadedSkier = skier;
         this.skierDetail.skierForm.get('firstName').setValue(skier.firstName);
         this.skierDetail.skierForm.get('lastName').setValue(skier.lastName);
@@ -30,7 +45,21 @@ export class SkierEditComponent implements OnInit {
         this.skierDetail.skierForm.get('pictureUrl').setValue(skier.pictureUrl);
         this.skierDetail.skierForm.get('gender').setValue(skier.gender);
         this.skierDetail.skierForm.get('country').setValue(skier.country.code);
+
+        this.refreshOpenRacesForSkier();
       });
+    });
+  }
+
+  private refreshOpenRacesForSkier() {
+    this.racesService.getOpenRacesForSkier(this.loadedSkier.id).subscribe(races => {
+      this.races = races;
+      this.nominateForm.controls['race'].setValidators([Validators.required, this.raceValidatorService.validRaceValidator(this.races)]);
+      this.filteredRaces = this.nominateForm.get('race').valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this.filter(value))
+        );
     });
   }
 
@@ -49,6 +78,22 @@ export class SkierEditComponent implements OnInit {
       this.router.navigateByUrl('/skiers');
     }, error => {
       this.snackBar.open(`Skier ${skier.firstName} ${skier.lastName} could not be updated!`);
+    });
+  }
+
+  private filter(value: string): Race[] {
+    const filterValue = value.toLowerCase();
+    return this.races.filter(race => race.name.toLowerCase().includes(filterValue));
+  }
+
+  nominateSkier() {
+    const selectedRace = this.races.filter(race => race.name === this.nominateForm.get('race').value)[0];
+    this.racesService.addRunToRace(selectedRace.id, this.loadedSkier).subscribe(_ => {
+      this.snackBar.open(`Skier ${this.loadedSkier.firstName} ${this.loadedSkier.lastName} nominated for ${selectedRace.name}!`);
+      this.nominateForm.reset();
+      this.refreshOpenRacesForSkier();
+    }, error => {
+      this.snackBar.open(`Skier ${this.loadedSkier.firstName} ${this.loadedSkier.lastName} could not be nominated!`);
     });
   }
 }

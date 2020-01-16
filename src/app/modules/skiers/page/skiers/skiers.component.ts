@@ -25,14 +25,10 @@ export class SkiersComponent implements OnInit {
               private dialog: MatDialog, private snackBar: MatSnackBar) {
     this.authService.isAuthenticated$.subscribe(value => {
       this.isAuthenticated = value;
-      if (value === true && !['edit', 'delete'].some(v => this.displayedColumns.includes(v))) {
+      if (value === true && !this.displayedColumns.includes('edit') && !this.displayedColumns.includes('delete')) {
         this.displayedColumns.push('edit', 'delete');
       }
     });
-
-    if (this.authService.isAuthenticated$.getValue()) {
-      this.displayedColumns.push('edit', 'delete');
-    }
 
     this.dataSource = new MatTableDataSource<Skier>();
     this.dataSource.sortingDataAccessor = (skier, property): string | number => {

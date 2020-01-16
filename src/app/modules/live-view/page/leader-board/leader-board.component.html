@@ -1,3 +1,8 @@
+<div class="mat-h4" *ngIf="currentRace">
+  {{currentRace.name}}
+  ({{currentRace.location.country.code}}
+  <span class="flag-icon flag-icon-{{currentRace.location.country.code | lowercase}}"></span>)
+</div>
 <div class="skier-table mat-elevation-z8">
   <div *ngIf="isLoadingBoard" class="loading-shade">
     <mat-spinner *ngIf="isLoadingBoard"></mat-spinner>
