@@ -7,7 +7,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NavigationComponent} from './layout/navigation/navigation.component';
 import {CoreModule} from '@app/core.module';
 import {SharedModule} from '@shared/shared.module';
-import {AuthLayoutComponent} from './layout/auth-layout/auth-layout.component';
 import {ContentLayoutComponent} from './layout/content-layout/content-layout.component';
 import {environment} from '@env';
 import {BASE_PATH} from '@hurace-client/api';
@@ -21,7 +20,6 @@ registerLocaleData(localeAt, 'de-AT');
   declarations: [
     AppComponent,
     NavigationComponent,
-    AuthLayoutComponent,
     ContentLayoutComponent,
   ],
   imports: [
