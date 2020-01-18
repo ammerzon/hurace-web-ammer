@@ -1,6 +1,6 @@
 <div *ngIf="currentRun != null; else elseBlock">
-  <mat-grid-list cols="2" rowHeight="250px">
-    <mat-grid-tile>
+  <mat-grid-list cols="4" rowHeight="280px">
+    <mat-grid-tile colspan="2">
       <mat-card class="skier-card">
         <mat-grid-list cols="2">
           <mat-grid-tile>
@@ -27,6 +27,19 @@
         </mat-list-item>
         <mat-list-item *ngFor="let time of times" mat-list-item>
           • {{time}}s
+        </mat-list-item>
+      </mat-list>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-list>
+        <mat-list-item>
+          <h1 class="run-heading"></h1>
+        </mat-list-item>
+        <mat-list-item *ngFor="let time of diffTimes" mat-list-item>
+          <mat-icon *ngIf="time <= 0" class="green-icon">keyboard_arrow_up</mat-icon>
+          <mat-icon *ngIf="time > 0" class="red-icon">keyboard_arrow_down</mat-icon>
+          <span *ngIf="time > 0">+</span>
+          {{time}}s
         </mat-list-item>
       </mat-list>
     </mat-grid-tile>
