@@ -65,7 +65,7 @@ export class TimeComparisonComponent implements OnInit {
     this.racesService.getRunsForRace(id, this.runNumber).subscribe(runs => {
       this.firstRun = runs.filter(run => run.skier.id === this.firstSkier.id)[0];
       this.runsService.getInterimTimes(this.firstRun.id).subscribe(times => {
-        this.firstSkierTimes = times.map(value => moment.utc(moment.duration(value).asMilliseconds()).format('ss:SSS'));
+        this.firstSkierTimes = times;
       });
       this.allSecondRuns = runs.filter(run => run.skier.id !== this.firstSkier.id).sort((a, b) => {
         if (a.skier.firstName < b.skier.firstName) {
@@ -87,7 +87,7 @@ export class TimeComparisonComponent implements OnInit {
   secondSkierSelected(id: number) {
     this.secondRun = this.allSecondRuns.filter(run => run.id === id)[0];
     this.runsService.getInterimTimes(this.secondRun.id).subscribe(times => {
-      this.secondSkierTimes = times.map(value => moment.utc(moment.duration(value).asMilliseconds()).format('ss:SSS'));
+      this.secondSkierTimes = times;
     });
   }
 

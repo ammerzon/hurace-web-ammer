@@ -13,7 +13,7 @@ import {environment} from '@env';
 export class CurrentSkierComponent implements OnInit {
   currentRun: Run;
   times: string[];
-  diffTimes: number[];
+  diffTimes: string[];
 
   constructor(private runsService: RunsService, private cdRef: ChangeDetectorRef) {
   }
@@ -29,10 +29,10 @@ export class CurrentSkierComponent implements OnInit {
     this.runsService.getCurrentRun().subscribe(currentRun => {
       this.currentRun = currentRun;
       this.runsService.getInterimTimes(this.currentRun.id).subscribe(times => {
-        this.times = times.map(value => moment.utc(moment.duration(value).asMilliseconds()).format('ss:SSS'));
+        this.times = times;
       });
       this.runsService.getInterimDiffTimes(this.currentRun.id).subscribe(diffTimes => {
-        this.diffTimes = diffTimes.map(value => moment.duration(value).asSeconds());
+        this.diffTimes = diffTimes;
       });
     });
   }

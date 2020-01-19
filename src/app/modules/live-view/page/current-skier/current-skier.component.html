@@ -26,7 +26,7 @@
           <h1 class="run-heading">{{currentRun.runNumber}}. run</h1>
         </mat-list-item>
         <mat-list-item *ngFor="let time of times" mat-list-item>
-          • {{time}}s
+          • {{time}}
         </mat-list-item>
       </mat-list>
     </mat-grid-tile>
@@ -36,10 +36,10 @@
           <h1 class="run-heading"></h1>
         </mat-list-item>
         <mat-list-item *ngFor="let time of diffTimes" mat-list-item>
-          <mat-icon *ngIf="time <= 0" class="green-icon">keyboard_arrow_up</mat-icon>
-          <mat-icon *ngIf="time > 0" class="red-icon">keyboard_arrow_down</mat-icon>
-          <span *ngIf="time > 0">+</span>
-          {{time}}s
+          <mat-icon *ngIf="time.startsWith('-')" class="green-icon">keyboard_arrow_up</mat-icon>
+          <mat-icon *ngIf="!time.startsWith('-')" class="red-icon">keyboard_arrow_down</mat-icon>
+          <span *ngIf="!time.startsWith('-')">+</span>
+          {{time}}
         </mat-list-item>
       </mat-list>
     </mat-grid-tile>
